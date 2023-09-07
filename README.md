@@ -1,7 +1,7 @@
 # CSE 5914 Fitness App
 Our team is committed to creating an app that saves you from guessing your workouts.  By using Elasticsearch to query a plethora of sources for exercises sorted by muscle group and individual muscle, we can create a streamlined training experience that will increase efficient progress in our users.
 
-<img src=”https://www.google.com/url?sa=i&url=https%3A%2F%2Fimgur.com%2Fgallery%2F7TXGbre&psig=AOvVaw1VuzWFtueXaN1BmCTQ9QDt&ust=1694183116669000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCIChyIjamIEDFQAAAAAdAAAAABAE”>
+<img src=”https://i.imgur.com/O2PLdpk.jpeg”>
 
 # Identifying the Problem
 
