@@ -13,6 +13,15 @@ The best way to produce viable output through our code is to first understand ou
     What sources will we pull from using Elasticsearch? <br>
 </ol>
 
+Tech Stack:
+- React
+- Flask
+- Elastic Search
+- Python
+- JavaScript
+- Docker
+- Git (?)
+
 Once setup is completed add your name HERE: <br>
 1.) Owen Hennessey <br>
 2.) Kyle Hoefker <br>
