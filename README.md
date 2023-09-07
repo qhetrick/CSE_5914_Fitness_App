@@ -3,6 +3,11 @@ Our team is committed to creating an app that saves you from guessing your worko
 
 ![Alt text](Stronk.png)
 
+# Proposed Features
+ - Search for exercise by muscle group / muscle
+ - Search for exercise by day (Push / Pull / Legs)
+ - Inclusion of videos from source to demonstrate movements
+
 # Identifying the Problem
 
 The best way to produce viable output through our code is to first understand our problem space. We've decided to start with some basic questions in an attempt to break down our problem.
@@ -22,6 +27,3 @@ Tech Stack:
 - Docker
 - Git (?)
 
-Once setup is completed add your name HERE: <br>
-1.) Owen Hennessey <br>
-2.) Kyle Hoefker <br>
