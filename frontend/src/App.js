@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import Button from '@mui/material/Button';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         >
           Learn React
         </a>
+        <Button variant="contained">Contained</Button>
       </header>
     </div>
   );
