@@ -3,23 +3,22 @@
 from elasticsearch import Elasticsearch # pip install elasticsearch (I had to manually move the libraries to this directory)
 import logging
 import csv
-import os
+import sys
 
 # Ignore security warnings for now
 logging.captureWarnings(True)
 
 # Connect to elastic search
-esPass = 'VXQLGUfva56soBM7fH4R' # my ELASTIC_PASSWORD
+esPass =  sys.argv[1] # ELASTIC_PASSWORD 'VXQLGUfva56soBM7fH4R'
 es = Elasticsearch("https://localhost:9200",
                     basic_auth=('elastic', esPass),
                     ca_certs='../http_ca.crt', # file must be in this directory
                     verify_certs=False) # source of the warnings, mimics '-k' flag
 
 if es.ping():
-    print('Yay Connect')
-    print(es.info())
+    print('Connected')
 else:
-    print('Awww it could not connect!')
+    print('ERROR: Couldn''t connect.')
 
 # Create index
 es.indices.delete(index="exercises")

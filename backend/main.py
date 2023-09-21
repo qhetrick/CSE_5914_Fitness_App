@@ -1,16 +1,26 @@
 from elasticsearch import Elasticsearch
 import logging
+import os
+import sys
 
 # Ignore security warnings for now
 logging.captureWarnings(True)
 
+# Take password as cmd line arg
+esPass = sys.argv[1]
+
+# Poplulate the data
+print('Populating Data...')
+os.system(f'python populateData.py {esPass}')
+print('Done!')
+
 # Connect to elastic search
-esPass = 'VXQLGUfva56soBM7fH4R' # my ELASTIC_PASSWORD
 es = Elasticsearch("https://localhost:9200",
                     basic_auth=('elastic', esPass),
                     ca_certs='../http_ca.crt', # file must be in this directory
                     verify_certs=False) # source of the warnings, mimics '-k' flag
 
+# Run basic searches
 if not es.ping():
     print('ERROR: Coulnd''t connect to Elasticsearch.')
 else:
