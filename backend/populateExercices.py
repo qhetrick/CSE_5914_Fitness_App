@@ -34,7 +34,6 @@ with open('../Resources/exercise_list.csv') as csv_file:
         if line_count == 0:
             tags = row
         else:
-            jsonEntry = f'{{"{tags[0]}":"{row[0]}","{tags[1]}":"{row[1]}","{tags[2]}"":""{row[2]}"",""{tags[3]}"":""{row[3]}"",""{tags[4]}"":""{row[4]}"",""{tags[5]}"":""{row[5]}"",""{tags[6]}"":""{row[6]}""}}'
             jsonEntry = {
                 f'{tags[0]}': f'{row[0]}',
                 f'{tags[1]}': f'{row[1]}',
