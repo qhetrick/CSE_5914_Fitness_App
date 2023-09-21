@@ -5,7 +5,7 @@ import logging
 import csv
 import os
 
-# Ignore warnings for now
+# Ignore security warnings for now
 logging.captureWarnings(True)
 
 # Connect to elastic search
