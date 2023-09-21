@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import Button from '@mui/material/Button';
 import './App.css';
+import './VideoCard.css';
+import CSVDisplay from './CSVDisplay';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         </a>
         <Button variant="contained">Contained</Button>
       </header>
+      <CSVDisplay />
     </div>
   );
 }

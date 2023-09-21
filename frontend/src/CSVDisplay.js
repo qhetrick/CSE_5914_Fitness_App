@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import Data from './exercise_list.csv'
+import VideoCard from './VideoCard'
 
 // This function is used to populate an object that contains a video that will be displayed on the web page
 function CSVDisplay() {
@@ -33,11 +34,11 @@ function CSVDisplay() {
     }, []);
 
     return (
-        <div className="App">
+        <div className="CSVDisplay">
 
             {/* <input type="file" accept=".csv" onChange={handleFileUpload} /> */}
 
-            {data.length ? (
+            {/* {data.length ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -63,8 +64,14 @@ function CSVDisplay() {
                             </tr>
                         ))}
                     </tbody>
+
                 </table>
+            ) : null} */}
+
+            {data.length ? (
+                data.map((row, index) => (<VideoCard title={row.name} description={row.muscle} image={row.previewSrc} videoLink={row.videoLink} />))
             ) : null}
+
 
             <br /><br />
 
