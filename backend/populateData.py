@@ -3,23 +3,26 @@
 from elasticsearch import Elasticsearch # pip install elasticsearch (I had to manually move the libraries to this directory)
 import logging
 import csv
-import os
+import sys
+
+# Ignore security warnings for now
+logging.captureWarnings(True)
 
 # Connect to elastic search
-esPass = 'VXQLGUfva56soBM7fH4R' # my ELASTIC_PASSWORD
+esPass =  sys.argv[1] # ELASTIC_PASSWORD 'VXQLGUfva56soBM7fH4R'
 es = Elasticsearch("https://localhost:9200",
                     basic_auth=('elastic', esPass),
                     ca_certs='../http_ca.crt', # file must be in this directory
                     verify_certs=False) # source of the warnings, mimics '-k' flag
 
 if es.ping():
-    print('Yay Connect')
-    print(es.info())
+    print('Connected')
 else:
-    print('Awww it could not connect!')
+    print('ERROR: Couldn''t connect.')
 
 # Create index
-os.system(f'curl -k --cacert ../Resources/http_ca.crt -u elastic:{esPass} -X PUT "https://localhost:9200/exercises')
+es.indices.delete(index="exercises")
+es.indices.create(index="exercises")
 
 # Populate data
 with open('../Resources/exercise_list.csv') as csv_file:
@@ -30,6 +33,14 @@ with open('../Resources/exercise_list.csv') as csv_file:
         if line_count == 0:
             tags = row
         else:
-            jsonEntry = f'{{""{tags[0]}"":""{row[0]}"",""{tags[1]}"":""{row[1]}"",""{tags[2]}"":""{row[2]}"",""{tags[3]}"":""{row[3]}"",""{tags[4]}"":""{row[4]}"",""{tags[5]}"":""{row[5]}"",""{tags[6]}"":""{row[6]}""}}'
-            os.system(f'curl -k --cacert ../Resources/http_ca.crt -u elastic:{esPass} -X POST https://localhost:9200/exercises/_doc/{row[0]} -H "Content-Type: application/json" -d "{jsonEntry}"')
+            jsonEntry = {
+                f'{tags[0]}': f'{row[0]}',
+                f'{tags[1]}': f'{row[1]}',
+                f'{tags[2]}': f'{row[2]}',
+                f'{tags[3]}': f'{row[3]}',
+                f'{tags[4]}': f'{row[4]}',
+                f'{tags[5]}': f'{row[5]}',
+                f'{tags[6]}': f'{row[6]}',
+            }
+            es.create(index="exercises", id=row[0], document=jsonEntry)
         line_count += 1
