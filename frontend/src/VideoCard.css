@@ -4,6 +4,7 @@
     box-shadow: 0px 0px 15px -5px;
     transition: 0.3s;
     animation: ease-in;
+    justify-content: center;
 }
 
 .card-container:hover {
@@ -30,6 +31,7 @@ p {
 
 .card-title {
     margin-bottom: 0.5rem;
+    color: #3967ff;
 }
 
 .btn {

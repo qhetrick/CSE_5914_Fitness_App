@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import Data from './exercise_list.csv'
 import VideoCard from './VideoCard'
+import { Grid } from '@mui/material';
 
 // This function is used to populate an object that contains a video that will be displayed on the web page
 function CSVDisplay() {
@@ -35,46 +36,16 @@ function CSVDisplay() {
 
     return (
         <div className="CSVDisplay">
-
-            {/* <input type="file" accept=".csv" onChange={handleFileUpload} /> */}
-
-            {/* {data.length ? (
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>name</th>
-                            <th>equipment</th>
-                            <th>level</th>
-                            <th>muscle</th>
-                            <th>previewSrc</th>
-                            <th>videoLink</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.map((row, index) => (
-                            <tr key={index}>
-                                <td>{row.id}</td>
-                                <td>{row.name}</td>
-                                <td>{row.equipment}</td>
-                                <td>{row.level}</td>
-                                <td>{row.muscle}</td>
-                                <td>{row.previewSrc}</td>
-                                <td>{row.videoLink}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-
-                </table>
-            ) : null} */}
-
-            {data.length ? (
-                data.map((row, index) => (<VideoCard title={row.name} description={row.muscle} image={row.previewSrc} videoLink={row.videoLink} />))
-            ) : null}
-
-
+            <Grid container>
+                {data.length ? (
+                    data.map(row => (
+                        <Grid item key={row.name} xs={12} sm={6} md={4}>
+                            <VideoCard title={row.name} description={row.muscle} image={row.previewSrc} videoLink={row.videoLink} />
+                        </Grid>
+                    ))
+                ) : null}
+            </Grid>
             <br /><br />
-
         </div>
     );
 }

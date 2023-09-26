@@ -12,15 +12,14 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload muthaaaa.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <br></br>
+        <Button variant="contained" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
-        </a>
-        <Button variant="contained">Contained</Button>
+        </Button>
+        <br />
+        <Button href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target='_blank' rel="noreferrer" >
+          Click me
+        </Button>
       </header>
       <CSVDisplay />
     </div>
