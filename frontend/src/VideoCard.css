@@ -29,6 +29,11 @@ p {
     padding: 0;
 }
 
+.card-title {
+    margin-bottom: 0.5rem;
+    color: #3967ff;
+}
+
 .btn {
     display: flex;
     justify-content: center;
