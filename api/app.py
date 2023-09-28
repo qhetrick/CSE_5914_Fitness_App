@@ -2,43 +2,52 @@
 from flask import Flask, request, render_template, jsonify
 from elasticsearch import Elasticsearch, helpers
 import csv
+import pandas as pd
 
-es = Elasticsearch(["http://localhost:9200"])
+# Connect to elastic search with password
+esPass = 'FcUVJCMQZHwHpr_jjueT' # my ELASTIC_PASSWORD
+es = Elasticsearch("https://localhost:9200",
+                    basic_auth=('elastic', esPass),
+                    ca_certs='../http_ca.crt', # file must be in this directory
+                    verify_certs=False) # source of the warnings, mimics '-k' flag
 
 app = Flask(__name__)
 
-def csv_to_elasticsearch(csv_file, index_name):
-    with open(csv_file, 'r') as file:
-        reader = csv.DictReader(file)
-        actions = [
-            {
-                "_index": index_name,
-                "_source": row
-            }
-            for row in reader
-        ]
+def feed_data_to_es(csv_file, chunk_size=500):
+    for chunk in pd.read_csv(csv_file, chunksize=chunk_size):
+        records = chunk.to_dict(orient='records')
+
+    actions = [
+        {
+            "_op_type": "index",
+            "_index": "exercise_index",
+            "_source": record
+        }
+        for record in records
+    ]
+    try:
         helpers.bulk(es, actions)
+    except helpers.BulkIndexError as e:
+        print(e.errors)
+
+feed_data_to_es("exercise_list.csv")
+
 
 @app.route('/')
 def index():
     return "Flask with Elasticsearch!"
 
 
-@app.route('/search', methods=['GET'])
+@app.route('/exercises', methods=['GET'])
 def search():
-    keyword = request.args.get('keyword')
-    response = es.search(index="your_index_name", body={
+    body = {
         "query": {
-            "multi_match": {
-                "query": keyword,
-                "fields": ["field1", "field2"]  # Add fields you want to search
-            }
+            "match_all": {}
         }
-    })
-    
-    # Extract hits from es response
-    hits = response['hits']['hits']
-    return jsonify(hits)
+    }
+    res = es.search(index="exercise_index", body=body, size=1000)  # Adjust size as needed.
+    results = [hit['_source'] for hit in res['hits']['hits']]
+    return jsonify(results)
 
 if __name__ == "__main__":
     app.run(debug=True)
