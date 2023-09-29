@@ -7,21 +7,24 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
+      light: '#757ce8',
       main: '#f45d05',
-      dark: '#f45d05'
+      dark: '#002884',
+      contrastText: '#fff',
     },
-
     secondary: {
+      light: '#ff7961',
       main: '#f45d05',
-      dark: '#f45d05'
-    }
-  }
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+  },
 });
 
 function App() {
   return (
     <div className='App'>
-        <Box sx={{ flexGrow: 1 }} >
+        <Box sx={{ flexGrow: 1, boxShadow: 3 }} >
           <AppBar  theme={theme} color='primary' position='static'>
             <Toolbar>
               <Typography sx={{ p: 1 }} variant='h5'>FitFriend</Typography>
