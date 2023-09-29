@@ -1,9 +1,5 @@
 # syntax=docker/dockerfile:1
 
-# Comments are provided throughout this file to help you get started.
-# If you need more help, visit the Dockerfile reference guide at
-# https://docs.docker.com/engine/reference/builder/
-
 ARG NODE_VERSION=20.5.1
 
 ################################################################################
@@ -16,6 +12,7 @@ WORKDIR /usr/src/app
 # Change ownership of the working directory to the 'node' user
 RUN chown -R node:node /usr/src/app
 
+# Run the application as a non-root user.
 USER node
 
 ################################################################################
@@ -54,9 +51,6 @@ FROM base as final
 
 # Use production node environment by default.
 ENV NODE_ENV production
-
-# Run the application as a non-root user.
-# USER node
 
 # Copy package.json so that package manager commands can be used.
 COPY package.json .

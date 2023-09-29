@@ -1,0 +1,4 @@
+# Text file containing all python libraries necessary
+
+elasticsearch
+
