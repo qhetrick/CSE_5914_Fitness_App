@@ -1,6 +1,6 @@
-import './App.css';
-import './VideoCard.css';
-import CSVDisplay from './CSVDisplay';
+import '../css/App.css';
+import '../css/VideoCard.css';
+import CSVDisplay from '../components/CSVDisplay';
 import { Box, AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 
@@ -21,7 +21,7 @@ const theme = createTheme({
   },
 });
 
-function App() {
+function Home() {
   return (
     <div className='App'>
         <Box sx={{ flexGrow: 1, boxShadow: 3 }} >
@@ -41,4 +41,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
