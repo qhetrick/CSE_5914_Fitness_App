@@ -39,7 +39,7 @@ def index():
 
 
 @app.route('/exercises', methods=['GET'])
-def search():
+def exercises():
     body = {
         "query": {
             "match_all": {}
@@ -48,6 +48,39 @@ def search():
     res = es.search(index="exercise_index", body=body, size=1000)  # Adjust size as needed.
     results = [hit['_source'] for hit in res['hits']['hits']]
     return jsonify(results)
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('q', '')
+    field = request.args.get('field', '')
+
+    # Validate the field if required, to ensure it's a valid and permitted field.
+    # For example:
+    valid_fields = ["id", "name", "description", "equipment", "level", "muscle"]
+    if field not in valid_fields:
+        return jsonify({"error": "Invalid field specified"}), 400
+
+    # Use the field to craft the Elasticsearch query
+    if query and field:
+        body = {
+            "query": {
+                "match": {
+                    field: query
+                }
+            }
+        }
+    else:
+        body = {
+            "query": {
+                "match_all": {}
+            }
+        }
+
+    res = es.search(index="exercise_index", body=body, size=1000)
+    results = [hit['_source'] for hit in res['hits']['hits']]
+    return jsonify(results)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
