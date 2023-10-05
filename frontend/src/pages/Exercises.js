@@ -1,4 +1,3 @@
-import "../css/App.css";
 import "../css/VideoCard.css";
 import CSVDisplay from "../components/CSVDisplay";
 import { Box } from "@mui/material";

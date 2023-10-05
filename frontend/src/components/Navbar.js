@@ -1,8 +1,8 @@
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 export default function Navbar() {
-  const theme = useTheme();
+    const theme = useTheme();
 
   return (
     <AppBar theme={theme} color="primary" position="static">

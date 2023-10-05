@@ -3,15 +3,18 @@ from flask import Flask, request, render_template, jsonify
 from elasticsearch import Elasticsearch, helpers
 import csv
 import pandas as pd
+import os
 
 # Connect to elastic search with password
-esPass = 'FcUVJCMQZHwHpr_jjueT' # my ELASTIC_PASSWORD
-#es = Elasticsearch("https://localhost:9200",
-#                   basic_auth=('elastic', esPass),
-#                    ca_certs='../http_ca.crt', # file must be in this directory
-#                    verify_certs=False) # source of the warnings, mimics '-k' flag
+esName = os.getenv("ELASTIC_USER")
+esPass = os.getenv("ELASTIC_PASSWORD")
 
-es = Elasticsearch(['http://elasticsearch:9200'])
+es = Elasticsearch(
+    ["https://es01:9200"],
+    basic_auth=(esName, esPass),
+    ca_certs="/usr/share/elasticsearch/config/certs/ca/ca.crt",
+    verify_certs=True,
+)
 
 app = Flask(__name__)
 
