@@ -1,9 +1,8 @@
-import "./App.css";
-import "./VideoCard.css";
-import CSVDisplay from "./CSVDisplay";
+import "../css/App.css";
+import "../css/VideoCard.css";
+import CSVDisplay from "../components/CSVDisplay";
 import { Box, AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import Home from "./Home";
 
 const theme = createTheme({
   palette: {
@@ -22,11 +21,9 @@ const theme = createTheme({
   },
 });
 
-function App() {
+function Home() {
   return (
     <div className="App">
-      <Home />
-
       <Box sx={{ flexGrow: 1, boxShadow: 3 }}>
         <AppBar theme={theme} color="primary" position="static">
           <Toolbar>
@@ -37,14 +34,6 @@ function App() {
             <Button color="inherit">Button1</Button>
             <Button color="inherit">Button2</Button>
             <Button color="inherit">About</Button>
-            <Button
-              color="inherit"
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Click me
-            </Button>
           </Toolbar>
         </AppBar>
       </Box>
@@ -53,4 +42,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
