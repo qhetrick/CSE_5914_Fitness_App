@@ -1,35 +1,9 @@
 .App {
   text-align: center;
-  background-color: #282c34;
-
-}
-
-.App {
-  text-align: center;
-  background-color: #282c34;
-
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  background-color: #f2efea;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #f2efea;
   min-height: 100vh;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
 }
