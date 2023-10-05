@@ -1,3 +1,4 @@
+<<<<<<< HEAD:frontend/src/components/exercise_list.csv
 id,name,equipment,level,muscle,previewSrc,videoLink
 1397958,1/2 Kneeling Row,Cable,Beginner,Middle Back,https://cdn.fitsw.com/assets/img/exerciseGifs/12_Kneeling_Single_Arm_Cable_Row_Exercise_Demo_How-to.gif,https://youtu.be/qvlbDSJ57wg
 1397975,21s,Barbell,Intermediate,Biceps,https://cdn.fitsw.com/assets/img/exerciseGifs/21s_For_Biceps_Exercise_Demo_How-to.gif,https://youtu.be/B3kkfRnHrnY
@@ -914,4 +915,3 @@ id,name,equipment,level,muscle,previewSrc,videoLink
 9023958,X Pull Down,Cable,Intermediate,Lats Back,https://cdn.fitsw.com/assets/img/exerciseGifs/Complete_X_Pull_Down_Lats_Back_Rear-Shoulder_Exercise_Demo_How-to.gif,https://youtu.be/1vbOvjJk8J0
 9115235,X-Mountain Climbers,None,Intermediate,Core,https://cdn.fitsw.com/assets/img/exerciseGifs/X_Body_Mountain_Climber.gif,https://www.youtube.com/watch?v=u_-jw0l74io
 1398045,Zercher squat,Barbell,Advanced,Quadriceps,https://cdn.fitsw.com/assets/img/exerciseGifs/Zercher_Squat_Leg_Exercise_Demo_How-to.gif,https://youtu.be/D6DF7wAELyU
-1397974,Zottman Curls,Dumbbells,Intermediate,Biceps,https://cdn.fitsw.com/assets/img/exerciseGifs/Zottman_Curls_Exercise_Demo_How-to.gif,https://www.youtube.com/watch?v=liqLthEHNvo
