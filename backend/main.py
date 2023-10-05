@@ -17,7 +17,7 @@ print('Done!')
 # Connect to elastic search
 es = Elasticsearch("https://localhost:9200",
                     basic_auth=('elastic', esPass),
-                    ca_certs='../http_ca.crt', # file must be in this directory
+                    ca_certs='http_ca.crt', # file must be in this directory
                     verify_certs=False) # source of the warnings, mimics '-k' flag
 
 # Run basic searches
