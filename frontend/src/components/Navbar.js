@@ -9,8 +9,8 @@ export default function Navbar() {
             <Toolbar>
               <Typography sx={{ p: 1 }} variant='h5'>FitFriend</Typography>
               <Button color='inherit'>Home</Button>
-              <Button color='inherit'>Button1</Button>
-              <Button color='inherit'>Button2</Button>
+              <Button color='inherit' href='/search' rel='noreferrer'>Search for Workout</Button>
+              <Button color='inherit'>Button Placeholder</Button>
               <Button color='inherit'>About</Button>
               <Button color='inherit'href='https://www.youtube.com/watch?v=dQw4w9WgXcQ' target='_blank' rel='noreferrer' >Click me</Button>
             </Toolbar>
