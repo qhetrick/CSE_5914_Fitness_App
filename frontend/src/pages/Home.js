@@ -14,7 +14,6 @@ function Home() {
     >
       <Box sx={{ flexGrow: 1, boxShadow: 3 }}>
         <Navbar />
-        <div></div>
       </Box>
     </div>
   );
