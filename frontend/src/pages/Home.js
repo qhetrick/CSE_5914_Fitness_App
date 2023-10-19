@@ -5,15 +5,16 @@ import Navbar from "../components/Navbar";
 
 function Home() {
   return (
-    <div className="Home">
+    <div
+      className="Home"
+      style={{
+        backgroundImage: "url(Frontend/src/pages/FitFriend_Logo.jpeg )",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <Box sx={{ flexGrow: 1, boxShadow: 3 }}>
         <Navbar />
-        <div
-          style={{
-            backgroundImage: "url(Frontend/src/pages/FitFriend_Logo.jpeg )",
-            backgroundRepeat: "no-repeat",
-          }}
-        ></div>
+        <div></div>
       </Box>
     </div>
   );
