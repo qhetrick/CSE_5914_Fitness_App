@@ -1,16 +1,20 @@
 import "../css/App.css";
 import "../css/VideoCard.css";
-import CSVDisplay from "../components/CSVDisplay";
 import { Box } from "@mui/material";
 import Navbar from "../components/Navbar";
 
 function Home() {
   return (
-    <div className="App">
+    <div className="Home">
       <Box sx={{ flexGrow: 1, boxShadow: 3 }}>
         <Navbar />
+        <div
+          style={{
+            backgroundImage: "url(Frontend/src/pages/FitFriend_Logo.jpeg )",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
       </Box>
-      <CSVDisplay />
     </div>
   );
 }

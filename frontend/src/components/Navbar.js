@@ -14,16 +14,10 @@ export default function Navbar() {
         <Button color="inherit" href="/search" rel="noreferrer">
           Search for Workout
         </Button>
-        <Button color="inherit">Button Placeholder</Button>
-        <Button color="inherit">About</Button>
-        <Button
-          color="inherit"
-          href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Click me
+        <Button color="inherit" href="/exercise">
+          Exercises
         </Button>
+        <Button color="inherit">About</Button>
       </Toolbar>
     </AppBar>
   );
