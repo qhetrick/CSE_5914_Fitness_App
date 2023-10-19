@@ -10,7 +10,9 @@ export default function Navbar() {
         <Typography sx={{ p: 1 }} variant="h5">
           FitFriend
         </Typography>
-        <Button color="inherit">Home</Button>
+        <Button color="inherit" href="/">
+          Home
+        </Button>
         <Button color="inherit" href="/search" rel="noreferrer">
           Search for Workout
         </Button>
