@@ -1,5 +1,5 @@
 import "../css/Search.css";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Navbar from "../components/Navbar";
 
 function Search() {
@@ -10,7 +10,9 @@ function Search() {
       </Box>
 
       <Box sx={{ flexGrow: 1 }}>
-        <p>Search page</p>
+        <Typography color={"white"} variant="h1">
+          Search Page
+        </Typography>
       </Box>
     </div>
   );

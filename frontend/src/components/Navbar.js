@@ -19,7 +19,9 @@ export default function Navbar() {
         <Button color="inherit" href="/exercise">
           Exercises
         </Button>
-        <Button color="inherit">About</Button>
+        <Button color="inherit" href="/about">
+          About
+        </Button>
       </Toolbar>
     </AppBar>
   );

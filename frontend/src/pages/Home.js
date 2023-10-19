@@ -6,18 +6,21 @@ import FitFriend_Logo from "./FitFriend_Logo.jpeg";
 
 function Home() {
   return (
-    <div
-      className="Home"
-      style={{
-        backgroundImage: "url(Frontend/src/pages/FitFriend_Logo.jpeg )",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="Home">
       <Box sx={{ flexGrow: 1, boxShadow: 3 }}>
         <Navbar />
       </Box>
-      <Box className="FitFriend_Logo" sx={{ flexGrow: 1 }}>
-        <img src={FitFriend_Logo} alt="FitFriend_Logo" />
+      <Box className="FitFriend_Logo" align="center">
+        <img
+          src={FitFriend_Logo}
+          alt="FitFriend_Logo"
+          style={{
+            minHeight: "100vh",
+            minWidth: "120vh",
+            maxHeight: "100vw",
+            maxWidth: "120vw",
+          }}
+        />
       </Box>
     </div>
   );

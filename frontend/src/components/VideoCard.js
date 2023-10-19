@@ -70,7 +70,7 @@ function VideoCard({ title, description, image, videoLink }) {
               <div className="card-content">
                 <div className="card-description">
                   <br />
-                  <Typography variant="body1" color="666370">
+                  <Typography variant="body1" color="#666370">
                     {description}
                   </Typography>
                   <br />
