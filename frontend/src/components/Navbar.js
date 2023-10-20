@@ -8,7 +8,7 @@ export default function Navbar() {
         <AppBar  theme={theme} color='primary' position='static'>
             <Toolbar>
               <Typography sx={{ p: 1 }} variant='h5'>FitFriend</Typography>
-              <Button color='inherit'>Home</Button>
+              <Button color='inherit' href='/'>Home</Button>
               <Button color='inherit' href='/search' rel='noreferrer'>Search for Workout</Button>
               <Button color='inherit'>Button Placeholder</Button>
               <Button color='inherit'>About</Button>
