@@ -96,6 +96,7 @@ services:
     depends_on:
       - es01
   es01:
+    #command: ["/wait-for-it.sh", "elasticsearch:9200", "--", "python", "app.py"]
     depends_on:
       setup:
         condition: service_healthy
@@ -230,5 +231,3 @@ services:
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - ELASTIC_HOSTS=https://es01:9200
-            
-

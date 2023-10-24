@@ -16,25 +16,43 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Create a non-privileged user that the app will run under.
-# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
-ARG UID=10001
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    appuser
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
-RUN --mount=type=cache,target=/root/.cache/pip \
-    --mount=type=bind,source=requirements.txt,target=requirements.txt \
-    python -m pip install -r requirements.txt
+## Create a non-privileged user that the app will run under.
+## See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
+#ARG UID=10001
+#RUN adduser \
+#    --disabled-password \
+#    --gecos "" \
+#    --home "/nonexistent" \
+#    --shell "/sbin/nologin" \
+#    --no-create-home \
+#    --uid "${UID}" \
+#    appuser
+#
+## Download dependencies as a separate step to take advantage of Docker's caching.
+## Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
+## Leverage a bind mount to requirements.txt to avoid having to copy them into
+## into this layer.
+#RUN --mount=type=cache,target=/root/.cache/pip \
+#    --mount=type=bind,source=requirements.txt,target=requirements.txt \
+#    python -m pip install -r requirements.txt
+# Set environment variables
+ENV FLASK_APP app.py
+ENV FLASK_RUN_HOST 0.0.0.0
+
+# Copy the current directory contents into the container at /app
+COPY requirements.txt ./
+
+# Install any needed packages specified in requirements.txt
+# RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+#ADD https://github.com/vishnubob/wait-for-it/raw/master/wait-for-it.sh /wait-for-it.sh
+#RUN chmod +x /wait-for-it.sh
+
+# Bundle app source
+COPY . .
+
 
 # Switch to the non-privileged user to run the application.
 USER appuser
@@ -45,5 +63,6 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 5000
 
-# Run the application.
-CMD python3 main.py
+# Run app.py when the container launches
+CMD ["python", "app.py"]
+#CMD ["flask", "run"]
