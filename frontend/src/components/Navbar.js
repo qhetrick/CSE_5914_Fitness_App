@@ -10,6 +10,7 @@ export default function Navbar() {
         <Typography sx={{ p: 1 }} variant="h5">
           FitFriend
         </Typography>
+          HomePage
         <Button color="inherit" href="/">
           Home
         </Button>
@@ -22,6 +23,7 @@ export default function Navbar() {
         <Button color="inherit" href="/about">
           About
         </Button>
+        main
       </Toolbar>
     </AppBar>
   );

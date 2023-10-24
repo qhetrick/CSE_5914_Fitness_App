@@ -6,10 +6,12 @@ import pandas as pd
 
 # Connect to elastic search with password
 esPass = 'FcUVJCMQZHwHpr_jjueT' # my ELASTIC_PASSWORD
-es = Elasticsearch("https://localhost:9200",
-                    basic_auth=('elastic', esPass),
-                    ca_certs='../http_ca.crt', # file must be in this directory
-                    verify_certs=False) # source of the warnings, mimics '-k' flag
+#es = Elasticsearch("https://localhost:9200",
+#                   basic_auth=('elastic', esPass),
+#                    ca_certs='../http_ca.crt', # file must be in this directory
+#                    verify_certs=False) # source of the warnings, mimics '-k' flag
+
+es = Elasticsearch(['http://elasticsearch:9200'])
 
 app = Flask(__name__)
 
@@ -39,7 +41,7 @@ def index():
 
 
 @app.route('/exercises', methods=['GET'])
-def search():
+def exercises():
     body = {
         "query": {
             "match_all": {}
@@ -49,5 +51,38 @@ def search():
     results = [hit['_source'] for hit in res['hits']['hits']]
     return jsonify(results)
 
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('q', '')
+    field = request.args.get('field', '')
+
+    # Validate the field if required, to ensure it's a valid and permitted field.
+    # For example:
+    valid_fields = ["id", "name", "description", "equipment", "level", "muscle"]
+    if field not in valid_fields:
+        return jsonify({"error": "Invalid field specified"}), 400
+
+    # Use the field to craft the Elasticsearch query
+    if query and field:
+        body = {
+            "query": {
+                "match": {
+                    field: query
+                }
+            }
+        }
+    else:
+        body = {
+            "query": {
+                "match_all": {}
+            }
+        }
+
+    res = es.search(index="exercise_index", body=body, size=1000)
+    results = [hit['_source'] for hit in res['hits']['hits']]
+    return jsonify(results)
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
