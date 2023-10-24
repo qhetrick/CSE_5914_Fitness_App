@@ -10,10 +10,20 @@ export default function Navbar() {
         <Typography sx={{ p: 1 }} variant="h5">
           FitFriend
         </Typography>
-        <Button color="inherit">Home</Button>
-        <Button color="inherit">Button1</Button>
-        <Button color="inherit">Button2</Button>
-        <Button color="inherit">About</Button>
+          HomePage
+        <Button color="inherit" href="/">
+          Home
+        </Button>
+        <Button color="inherit" href="/search" rel="noreferrer">
+          Search for Workout
+        </Button>
+        <Button color="inherit" href="/exercise">
+          Exercises
+        </Button>
+        <Button color="inherit" href="/about">
+          About
+        </Button>
+        main
       </Toolbar>
     </AppBar>
   );

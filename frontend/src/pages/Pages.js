@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 import Home from "./Home.js";
+import Search from "./Search.js";
+import Exercises from "./Exercises.js";
+import About from "./About.js";
 import { ThemeProvider } from "@emotion/react";
 
 const theme = createTheme({
@@ -26,6 +29,9 @@ export const Pages = () => {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />}></Route>
+          <Route path="/exercise" element={<Exercises />}></Route>
+          <Route path="/about" element={<About />}></Route>
         </Routes>
       </ThemeProvider>
     </Router>
