@@ -22,6 +22,9 @@ export default function Navbar() {
         <Button color="inherit" href="/about">
           About
         </Button>
+        <Button color="inherit" href="/team">
+          Team
+        </Button>
       </Toolbar>
     </AppBar>
   );

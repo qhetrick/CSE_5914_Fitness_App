@@ -4,6 +4,7 @@ import Home from "./Home.js";
 import Search from "./Search.js";
 import Exercises from "./Exercises.js";
 import About from "./About.js";
+import Team from "./Team.js";
 import { ThemeProvider } from "@emotion/react";
 
 const theme = createTheme({
@@ -32,6 +33,7 @@ export const Pages = () => {
           <Route path="/search" element={<Search />}></Route>
           <Route path="/exercise" element={<Exercises />}></Route>
           <Route path="/about" element={<About />}></Route>
+          <Route path="/team" element={<Team />}></Route>
         </Routes>
       </ThemeProvider>
     </Router>
