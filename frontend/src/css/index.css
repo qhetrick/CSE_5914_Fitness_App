@@ -19,3 +19,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.MuiOutlinedInput-notchedOutline {
+  border-width: 1px !important;
+  border-color: #f45d05 !important;
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #f45d05 !important;
+}
+
+.MuiInputLabel-root{
+  color:#f45d05 !important;
+}

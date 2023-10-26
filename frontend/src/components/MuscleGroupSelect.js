@@ -70,7 +70,7 @@ export default function MuscleGroupSelect() {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 400 }}>
-        <InputLabel id="select-muscle-group-label">{label}</InputLabel>
+        <InputLabel id="select-muscle-group-label" color={theme.contrastText}>{label}</InputLabel>
         <Select
           labelId="select-muscle-group-label"
           label={label}
@@ -82,7 +82,7 @@ export default function MuscleGroupSelect() {
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <Chip style={{backgroundColor:"#f2efea"}} key={value} label={value} />
               ))}
             </Box>
           )}
