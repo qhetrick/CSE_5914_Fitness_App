@@ -1,7 +1,8 @@
 from elasticsearch import Elasticsearch
 import logging
 import sys
-import populateData
+import os
+from populateData import populateData
 
 import numpy as np
 
@@ -9,18 +10,28 @@ import numpy as np
 logging.captureWarnings(True)
 
 # Take password as cmd line arg
-esPass = sys.argv[1]
+# esPass = sys.argv[1]
 
 # Poplulate the data
 print('Populating Data...')
-# populateData.populateData(esPass)
+populateData()
 print('Done!')
 
+# Connect to elastic search with password
+esName = os.getenv("ELASTIC_USER")
+esPass = os.getenv("ELASTIC_PASSWORD")
+
+es = Elasticsearch(
+    ["https://es01:9200"],
+    basic_auth=(esName, esPass),
+    ca_certs="/usr/share/elasticsearch/config/certs/ca/ca.crt",
+    verify_certs=True,
+)
 # Connect to elastic search
-es = Elasticsearch("https://localhost:9200",
-                   basic_auth=('elastic', esPass),
-                   ca_certs='../Resources/http_ca.crt',  # file must be in this directory
-                   verify_certs=False)  # source of the warnings, mimics '-k' flag
+# es = Elasticsearch("https://localhost:9200",
+#                    basic_auth=('elastic', esPass),
+#                    ca_certs='../Resources/http_ca.crt',  # file must be in this directory
+#                    verify_certs=False)  # source of the warnings, mimics '-k' flag
 
 
 # Run basic searches

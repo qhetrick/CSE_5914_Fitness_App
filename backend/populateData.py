@@ -1,17 +1,29 @@
 from elasticsearch import Elasticsearch
+import os
 import logging
 import csv
 
 
-def populateData(esPass):
+def populateData():
     # Ignore security warnings for now
     logging.captureWarnings(True)
 
-    # Connect to elastic search
-    es = Elasticsearch("https://localhost:9200",
-                        basic_auth=('elastic', esPass),
-                        ca_certs='../Resources/http_ca.crt', # file must be in this directory
-                        verify_certs=False) # source of the warnings, mimics '-k' flag
+    # Connect to elastic search with password
+    esName = os.getenv("ELASTIC_USER")
+    esPass = os.getenv("ELASTIC_PASSWORD")
+
+    es = Elasticsearch(
+        ["https://es01:9200"],
+        basic_auth=(esName, esPass),
+        ca_certs="/usr/share/elasticsearch/config/certs/ca/ca.crt",
+        verify_certs=True,
+    )
+
+    # # Connect to elastic search
+    # es = Elasticsearch("https://localhost:9200",
+    #                     basic_auth=('elastic', esPass),
+    #                     ca_certs='../Resources/http_ca.crt', # file must be in this directory
+    #                     verify_certs=False) # source of the warnings, mimics '-k' flag
 
     if es.ping():
         print('Connected')
