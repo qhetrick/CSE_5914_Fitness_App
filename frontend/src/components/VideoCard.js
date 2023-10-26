@@ -31,7 +31,7 @@ function VideoCard({ title, description, image, videoLink }) {
         <Grid item>
           <Card
             elevation={3}
-            color="#000000"
+            color="#f45d05"
             style={{
               minHeight: "50vh",
               minWidth: "50vh",
@@ -40,8 +40,8 @@ function VideoCard({ title, description, image, videoLink }) {
               boxShadow: 3,
             }}
           >
-            <CardContent sx={{ color: "#000000" }}>
-              <Typography variant="h5" color="#000000">
+            <CardContent sx={{ color: "#f45d05" }}>
+              <Typography variant="h5" color="#f45d05">
                 {title}
               </Typography>
             </CardContent>
@@ -51,7 +51,7 @@ function VideoCard({ title, description, image, videoLink }) {
             <div className="card-content">
               <div className="card-description">
                 <br />
-                <Typography variant="body1" color="#000000">
+                <Typography variant="body1" color="#f45d05">
                   {description}
                 </Typography>
                 <br />
