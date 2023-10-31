@@ -12,7 +12,7 @@ Extra:
 - If that doesn't fix your issue, run "git clean -fdx" and then rerun 1 and 2 *BE SURE THAT YOU STASH ANY CHANGES BEFORE DOING SO*
 - Last resort that should fix other docker related errors, run "docker compose down -v" instead, but only do this as a last resort as it clears your local docker volumes
 - If you run into an error regarding the "elastic" network already existing, that's because one was created when you were individually testing elasticsearch. To fix this, 
-    just run "docker network remove elastic" or "docker network elastic remove" (I forget which one).  You can see if the command worked by running "docker network list"
+    just run "docker network remove elastic".  You can see if the command worked by running "docker network list"
     and make sure you don't see an elastic network, at this point you can go through the other docker commands to bring the containers up.
 
 
