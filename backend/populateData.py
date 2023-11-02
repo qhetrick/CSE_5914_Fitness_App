@@ -3,16 +3,11 @@ import logging
 import csv
 
 
-def populateData(esPass):
+def populateData(es):
     # Ignore security warnings for now
     logging.captureWarnings(True)
 
-    # Connect to elastic search
-    es = Elasticsearch("https://localhost:9200",
-                        basic_auth=('elastic', esPass),
-                        ca_certs='../Resources/http_ca.crt', # file must be in this directory
-                        verify_certs=False) # source of the warnings, mimics '-k' flag
-
+    # Test connection
     if es.ping():
         print('Connected')
     else:
@@ -21,8 +16,9 @@ def populateData(esPass):
     # Create index
     try:
         es.indices.delete(index="exercises")
-    finally:
-        es.indices.create(index="exercises")
+    except:
+        pass
+    es.indices.create(index="exercises")
 
     # Populate data
     with open('exercise_list.csv') as csv_file:
