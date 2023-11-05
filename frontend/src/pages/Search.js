@@ -1,9 +1,16 @@
 import '../css/Search.css';
 import { Box, Typography } from '@mui/material';
 import Navbar from '../components/Navbar';
-import MuscleGroupSelect from '../components/MuscleGroupSelect';
+import MuscleGroupSelect from '../components/selects/MuscleGroupSelect';
+import LevelSelect from '../components/selects/LevelSelect';
+
 
 function Search() {
+
+  let testSearch = [];
+  testSearch.push( {"muscle": "abs"}, {"level": "beginner"}, {"equipment": "none"} );
+  console.log(testSearch);
+
   return (
     <div className='Search'>
         <Box sx={{ flexGrow: 1, boxShadow: 3 }} >
@@ -17,6 +24,7 @@ function Search() {
       
         <Box>
           <MuscleGroupSelect/>
+          <LevelSelect/>
         </Box>
     </div>
   );
