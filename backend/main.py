@@ -218,27 +218,6 @@ def search_with_attributes_and_categories(attributes, categories):
     query_json = json.dumps(query, indent=4)
     print(query_json)
 
-    # Run basic searches
-    # def search(userInput, tag=None):
-    # if tag is None:
-    #     tag = "name"
-    # words = userInput.split(" ")
-    # q = {"bool": {"must": []}}
-    # for word in words:
-    #     q["bool"]["must"].append({"fuzzy": {tag: {"value": word, "fuzziness": "AUTO"}}})
-    # return es.search(index="exercises", query=q, size=1000)["hits"]["hits"]
-
-    # query = {
-    #     "query": {
-    #         "fuzzy": {
-    #             "equipment": {
-    #                 "value": "None",  # The search term you want to make fuzzy
-    #                 "fuzziness": "AUTO",  # You can adjust the fuzziness as needed
-    #             }
-    #         }
-    #     }
-    # }
-
     # Execute the query
     results = es.search(index="exercises", body=query)
 
