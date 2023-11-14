@@ -13,26 +13,6 @@ function Home() {
   const [exercises, setExercises] = useState([]);
   const [showData, setShowData] = useState(false);
 
-  async function getAll() {
-    try {
-      // Fetch the data from the Flask server
-      const response = await fetch("http://localhost:5000/exercises");
-  
-      // Check if the response is ok (status code 200-299)
-      if (!response.ok) {
-        throw new Error('Network response was not ok: ' + response.statusText);
-      }
-  
-      // Wait for the promise to resolve and get the JSON data
-      const data = await response.json();
-      setExercises(data.results);
-      setShowData(true);
-    } catch (error) {
-      // Catch any errors that occur during the fetch operation
-      console.error('There has been a problem with your fetch operation:', error);
-    }
-  }
-
   // Fetch exercises when the component mounts
 
 
@@ -54,9 +34,6 @@ function Home() {
         <Navbar />
       </Box>
       <Box className="FitFriend_Logo" align="center">
-        <Button onClick={getAll}>
-          Click Me!
-        </Button>
         <img
           src={FitFriend_Logo}
           alt="FitFriend_Logo"

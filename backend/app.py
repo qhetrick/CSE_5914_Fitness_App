@@ -59,6 +59,13 @@ def exercises():
 
     return jsonify({'results': results})
 
+@app.route('/filter', methods=['POST'])
+def filter():
+    data = request.get_json()
+    print(data)
+
+    return jsonify({'results': 'data'})
+
 
 @app.route('/search', methods=['GET'])
 def search():

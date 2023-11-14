@@ -34,7 +34,7 @@ function getStyles(level, levelSelect, theme) {
   };
 }
 
-export default function MuscleGroupSelect() {
+export default function LevelSelect() {
   const theme = useTheme();
   const label = "Difficulty";
   const [selectedLevel, setSelectedLevel] = React.useState([]);

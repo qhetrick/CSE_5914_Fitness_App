@@ -19,7 +19,7 @@ const MenuProps = {
   },
 };
 
-const levels = [
+const equipment = [
   'Ab wheel',
   'Balance Ball',
   'Barbell',
@@ -43,7 +43,7 @@ const levels = [
   'Elastic Bands, Stability Ball',
   'Equalizer',
   'Foam Roller',
-  'Hex Bar \/ Trap Bar',
+  'Hex Bar \\/ Trap Bar',
   'Kettlebell',
   'Kettlebell, Resistance Band',
   'Landmine',
@@ -70,16 +70,16 @@ function getStyles(level, levelSelect, theme) {
   };
 }
 
-export default function MuscleGroupSelect() {
+export default function EquipmentSelect() {
   const theme = useTheme();
-  const label = "Difficulty";
-  const [selectedLevel, setSelectedLevel] = React.useState([]);
+  const label = "Equipment";
+  const [selectedEquipment, setSelectedEquipment] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedLevel(
+    setSelectedEquipment(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
@@ -88,15 +88,15 @@ export default function MuscleGroupSelect() {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 400 }}>
-        <InputLabel id="select-level-label" color={theme.contrastText}>{label}</InputLabel>
+        <InputLabel id="select-equipment-label" color={theme.contrastText}>{label}</InputLabel>
         <Select
-          labelId="select-level-label"
+          labelId="select-equipment-label"
           label={label}
-          id="select-level-chip"
+          id="select-equipment-chip"
           multiple
-          value={selectedLevel}
+          value={selectedEquipment}
           onChange={handleChange}
-          input={<OutlinedInput id="select-level-chip" label={label} />}
+          input={<OutlinedInput id="select-equipment-chip" label={label} />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
@@ -106,13 +106,13 @@ export default function MuscleGroupSelect() {
           )}
           MenuProps={MenuProps}
         >
-          {levels.map((level) => (
+          {equipment.map((equipment) => (
             <MenuItem
-              key={level}
-              value={level}
-              style={getStyles(level, selectedLevel, theme)}
+              key={equipment}
+              value={equipment}
+              style={getStyles(equipment, selectedEquipment, theme)}
             >
-              {level}
+              {equipment}
             </MenuItem>
           ))}
         </Select>
