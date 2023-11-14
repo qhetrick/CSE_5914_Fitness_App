@@ -3,6 +3,7 @@ import logging
 import sys
 from populateData import populateData
 import os
+import json
 
 import numpy as np
 
@@ -18,85 +19,111 @@ es = Elasticsearch(
 )
 
 # Poplulate the data
-print('Populating Data...')
+print("Populating Data...")
 populateData(es)
-print('Done!')
+print("Done!")
 
 
 # Run basic searches
 def search(userInput, tag=None):
-    if tag is None: tag = "name"
-    words = userInput.split(' ')
+    if tag is None:
+        tag = "name"
+    words = userInput.split(" ")
     q = {"bool": {"must": []}}
     for word in words:
         q["bool"]["must"].append({"fuzzy": {tag: {"value": word, "fuzziness": "AUTO"}}})
-    return es.search(index="exercises", query=q, size=1000)['hits']['hits']
+
+    return es.search(index="exercises", query=q, size=1000)["hits"]["hits"]
 
 
 def exactSearch(userInput, tag=None):
-    if tag is None: tag = "name"
-    return es.search(index="exercises", query={"match": {tag: userInput}}, size=1000)['hits']['hits']
+    if tag is None:
+        tag = "name"
+    return es.search(index="exercises", query={"match": {tag: userInput}}, size=1000)[
+        "hits"
+    ]["hits"]
+
 
 # Gather data for generateWorkout
-stretches = search('Stretching', tag='muscle')    
+stretches = search("Stretching", tag="muscle")
 
-quads = search('squat')
-quads.extend(search('lunge'))
-quads.extend(search('jump'))
+quads = search("squat")
+quads.extend(search("lunge"))
+quads.extend(search("jump"))
 
-hamstrings = search('deadlift')
-hamstrings.extend(search('hip raise'))
-hamstrings.extend(search('good morning'))
-hamstrings.extend(search('step up'))
+hamstrings = search("deadlift")
+hamstrings.extend(search("hip raise"))
+hamstrings.extend(search("good morning"))
+hamstrings.extend(search("step up"))
 
-push = search('overhead press')
-push.extend(search('bench press'))
-push.extend(search('incline dumbell press'))
-push.extend(search('pushup'))
-push.extend(exactSearch('dip'))
+push = search("overhead press")
+push.extend(search("bench press"))
+push.extend(search("incline dumbell press"))
+push.extend(search("pushup"))
+push.extend(exactSearch("dip"))
 
-pull = search('chinup')
-pull.extend(search('pullup'))
-pull.extend(search('row'))
+pull = search("chinup")
+pull.extend(search("pullup"))
+pull.extend(search("row"))
 
-core = search('plank')
-core.extend(search('crunch'))
-core.extend(search('mountain climber'))
-core.extend(search('tuck'))
-core.extend(search('leg raise'))
+core = search("plank")
+core.extend(search("crunch"))
+core.extend(search("mountain climber"))
+core.extend(search("tuck"))
+core.extend(search("leg raise"))
 
-def generateWorkout(excludeEquipList=[], level=['Beginner', 'Intermediate', 'Advanced']):
+
+def generateWorkout(
+    excludeEquipList=[], level=["Beginner", "Intermediate", "Advanced"]
+):
     # Filter Data
     fStretches = []
     for hit in stretches:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if (
+            hit["_source"]["equipment"] not in excludeEquipList
+            and hit["_source"]["level"] in level
+        ):
             fStretches.append(hit)
-            
+
     fQuads = []
     for hit in quads:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if (
+            hit["_source"]["equipment"] not in excludeEquipList
+            and hit["_source"]["level"] in level
+        ):
             fQuads.append(hit)
-            
+
     fHamstrings = []
     for hit in hamstrings:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if (
+            hit["_source"]["equipment"] not in excludeEquipList
+            and hit["_source"]["level"] in level
+        ):
             fHamstrings.append(hit)
-            
+
     fPush = []
     for hit in push:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if (
+            hit["_source"]["equipment"] not in excludeEquipList
+            and hit["_source"]["level"] in level
+        ):
             fPush.append(hit)
-            
+
     fPull = []
     for hit in pull:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if (
+            hit["_source"]["equipment"] not in excludeEquipList
+            and hit["_source"]["level"] in level
+        ):
             fPull.append(hit)
-            
+
     fCore = []
     for hit in core:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if (
+            hit["_source"]["equipment"] not in excludeEquipList
+            and hit["_source"]["level"] in level
+        ):
             fCore.append(hit)
-        
 
     # Select From Filtered Data
     r1 = np.random.randint(0, len(fStretches) - 1)
@@ -106,22 +133,159 @@ def generateWorkout(excludeEquipList=[], level=['Beginner', 'Intermediate', 'Adv
     r5 = np.random.randint(0, len(fPull) - 1)
     r6 = np.random.randint(0, len(fCore) - 1)
 
-    return [fStretches[r1], fQuads[r2], fHamstrings[r3], fPush[r4], fPull[r5], fCore[r6]]
+    return [
+        fStretches[r1],
+        fQuads[r2],
+        fHamstrings[r3],
+        fPush[r4],
+        fPull[r5],
+        fCore[r6],
+    ]
+
+
+# Example usage:
+# attributes = ["Ab Wheel", "Hamstrings", "Beginner", "Intermediate"]
+# categories = ["equipment", "muscle", "level", "level"]
+def search_with_attributes_and_categories(attributes, categories):
+    # Place each filter item in their own attribute list
+    equipment_clauses = [
+        {
+            "fuzzy": {
+                "equipment": {
+                    "value": "None",
+                    "fuzziness": "AUTO",
+                }
+            }
+        }
+    ]
+    level_clauses = []
+    muscle_clauses = []
+
+    for attr, cat in zip(attributes, categories):
+        if cat == "equipment":
+            words = attr.split(" ")
+            q = {"bool": {"must": []}}
+            for word in words:
+                q["bool"]["must"].append(
+                    {"fuzzy": {cat: {"value": word, "fuzziness": "2"}}}
+                )
+
+            equipment_clauses.append(q)
+
+        elif cat == "level":
+            words = attr.split(" ")
+            q = {"bool": {"must": []}}
+            for word in words:
+                q["bool"]["must"].append(
+                    {"fuzzy": {cat: {"value": word, "fuzziness": "AUTO"}}}
+                )
+
+            level_clauses.append(q)
+
+        elif cat == "muscle":
+            words = attr.split(" ")
+            q = {"bool": {"must": []}}
+            for word in words:
+                q["bool"]["must"].append(
+                    {"fuzzy": {cat: {"value": word, "fuzziness": "2"}}}
+                )
+
+            muscle_clauses.append(q)
+
+        else:
+            print("ERROR: Invalid filter category passed to backend")
+
+    query = {
+        "query": {
+            "bool": {
+                "must": [  # Logically AND
+                    {
+                        "bool": {"should": equipment_clauses}
+                    },  # Logically OR within equipment category
+                    {
+                        "bool": {"should": level_clauses}
+                    },  # Logically OR within level category
+                    {
+                        "bool": {"should": muscle_clauses}
+                    },  # Logically OR within muscle category
+                ]
+            }
+        },
+        "size": 1000,  # Set the size to return up to 1000 entries
+    }
+
+    # Convert the query dictionary to a JSON string and print it
+    query_json = json.dumps(query, indent=4)
+    print(query_json)
+
+    # Run basic searches
+    # def search(userInput, tag=None):
+    # if tag is None:
+    #     tag = "name"
+    # words = userInput.split(" ")
+    # q = {"bool": {"must": []}}
+    # for word in words:
+    #     q["bool"]["must"].append({"fuzzy": {tag: {"value": word, "fuzziness": "AUTO"}}})
+    # return es.search(index="exercises", query=q, size=1000)["hits"]["hits"]
+
+    # query = {
+    #     "query": {
+    #         "fuzzy": {
+    #             "equipment": {
+    #                 "value": "None",  # The search term you want to make fuzzy
+    #                 "fuzziness": "AUTO",  # You can adjust the fuzziness as needed
+    #             }
+    #         }
+    #     }
+    # }
+
+    # Execute the query
+    results = es.search(index="exercises", body=query)
+
+    # Process and print the search results as needed
+    for hit in results["hits"]["hits"]:
+        print(
+            "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+            % hit["_source"]
+        )
+
+    print("Done printing")
+
+    # Process and return the search results
+    return results
 
 
 # Search in terminal for now
 if not es.ping():
-    print('ERROR: Couldn''t connect to Elasticsearch.')
+    print("ERROR: Couldn" "t connect to Elasticsearch.")
 else:
-    #userInput = False
+    # userInput = False
     first = True
-    while True: #userInput != 'q':
-        #userInput = input('Press Enter to generate a workout (q to quit): ')#'Enter a search query (q to quit): ')
-        #if userInput != 'q':
+    while True:  # userInput != 'q':
+        # userInput = input('Press Enter to generate a workout (q to quit): ')#'Enter a search query (q to quit): ')
+        # if userInput != 'q':
         if first:
             first = False
-            results = generateWorkout()#search(userInput)
+
+            attributes = ["Ab Wheel", "Hamstrings", "Beginner", "Intermediate"]
+            categories = ["equipment", "muscle", "level", "level"]
+            search_results = search_with_attributes_and_categories(
+                attributes, categories
+            )
+
+            results = generateWorkout()  # search(userInput)
             print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
             for hit in results:
-                print("%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s" % hit[
-                    "_source"])
+                print(
+                    "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+                    % hit["_source"]
+                )
+
+            # # Process and print the search results as needed
+            # for hit in search_results["hits"]["hits"]:
+            #     print(
+            #         "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+            #         % hit["_source"]
+            #     )
+
+            # print(search_results["hits"]["total"]["value"])
