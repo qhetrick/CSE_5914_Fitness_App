@@ -62,8 +62,8 @@ def exercises():
 @app.route('/filter', methods=['POST'])
 def filter():
     data = request.get_json()
-    print(data)
-
+    print('attributes: ', data.attributes)
+    print('categories: ', data.categories)
     return jsonify({'results': 'data'})
 
 
