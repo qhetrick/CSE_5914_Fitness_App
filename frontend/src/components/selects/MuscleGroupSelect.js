@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -52,10 +53,11 @@ function getStyles(muscle, muscleGroup, theme) {
   };
 }
 
-export default function MuscleGroupSelect() {
+export default function MuscleGroupSelect(props) {
   const theme = useTheme();
   const label = "Muscle Group";
   const [muscleGroup, setMuscleGroup] = React.useState([]);
+  const setSelectedMuscles = props.setSelectedMuscles;
 
   const handleChange = (event) => {
     const {
@@ -65,6 +67,8 @@ export default function MuscleGroupSelect() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+
+    setSelectedMuscles(event.target.value);
   };
 
   return (

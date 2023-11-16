@@ -5,14 +5,32 @@ import MuscleGroupSelect from '../components/selects/MuscleGroupSelect';
 import LevelSelect from '../components/selects/LevelSelect';
 import EquipmentSelect from '../components/selects/EquipmentSelect';
 import { Button } from '@mui/material';
+import React, { useState } from 'react';
 
 function Search() {
-
+  const [selectedMuscles, setSelectedMuscles] = useState([]);
+  const [selectedLevels, setSelectedLevels] = useState([]);
+  const [selectedEquipment, setSelectedEquipment] = useState([]);
   let testSearch = [];
   testSearch.push( {"muscle": "abs"}, {"level": "beginner"}, {"equipment": "none"} );
-  console.log(testSearch);
 
-  async function getAll() {
+  async function getExercises() {
+    let attributes=[];
+    let categories=[];
+
+    selectedMuscles.forEach((muscle) => {
+      attributes.push(muscle);
+      categories.push('muscle')
+    })
+    selectedLevels.forEach((level) => {
+      attributes.push(level);
+      categories.push('level')
+    })
+    selectedEquipment.forEach((equipment) => {
+      attributes.push(equipment);
+      categories.push('equipment');
+    })
+
     try {
       // Fetch the data from the Flask server
       const response = await fetch("http://localhost:5000/filter", {
@@ -20,7 +38,10 @@ function Search() {
         headers: {
           "Content-Type": "application/json", 
         },
-        body: JSON.stringify(testSearch)
+        body: JSON.stringify({
+          attributes: attributes,
+          categories: categories
+        })
       });
   
       // Check if the response is ok (status code 200-299)
@@ -48,10 +69,10 @@ function Search() {
         </Box>
       
         <Box>
-          <MuscleGroupSelect/>
-          <LevelSelect/>
-          <EquipmentSelect/>
-          <Button onClick={getAll}>
+          <MuscleGroupSelect setSelectedMuscles={setSelectedMuscles}/>
+          <LevelSelect setSelectedLevels={setSelectedLevels}/>
+          <EquipmentSelect setSelectedEquipment={setSelectedEquipment}/>
+          <Button onClick={getExercises}>
           Click Me!
         </Button>
         </Box>  

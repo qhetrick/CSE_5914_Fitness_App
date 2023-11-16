@@ -34,10 +34,11 @@ function getStyles(level, levelSelect, theme) {
   };
 }
 
-export default function LevelSelect() {
+export default function LevelSelect(props) {
   const theme = useTheme();
   const label = "Difficulty";
   const [selectedLevel, setSelectedLevel] = React.useState([]);
+  const setSelectedLevels = props.setSelectedLevels;
 
   const handleChange = (event) => {
     const {
@@ -47,6 +48,7 @@ export default function LevelSelect() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+    setSelectedLevels(event.target.value)
   };
 
   return (
