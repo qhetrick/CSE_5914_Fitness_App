@@ -4,6 +4,7 @@ from elasticsearch import Elasticsearch, helpers
 import csv
 import pandas as pd
 import os
+from flask_cors import CORS, cross_origin;
 
 # Connect to elastic search with password
 esName = os.getenv("ELASTIC_USER")
@@ -17,6 +18,8 @@ es = Elasticsearch(
 )
 
 app = Flask(__name__)
+CORS(app)
+
 
 def feed_data_to_es(csv_file, chunk_size=500):
     for chunk in pd.read_csv(csv_file, chunksize=chunk_size):
@@ -40,7 +43,7 @@ feed_data_to_es("exercise_list.csv")
 
 @app.route('/')
 def index():
-    return "Flask with Elasticsearch!"
+    return "Flask Elasticsearch!"
 
 
 @app.route('/exercises', methods=['GET'])
@@ -52,7 +55,16 @@ def exercises():
     }
     res = es.search(index="exercise_index", body=body, size=1000)  # Adjust size as needed.
     results = [hit['_source'] for hit in res['hits']['hits']]
-    return jsonify(results)
+    print(jsonify({'results': results}))
+
+    return jsonify({'results': results})
+
+@app.route('/filter', methods=['POST'])
+def filter():
+    data = request.get_json()
+    print(data)
+
+    return jsonify({'results': 'data'})
 
 
 @app.route('/search', methods=['GET'])
