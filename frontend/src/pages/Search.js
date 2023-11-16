@@ -1,5 +1,5 @@
 import '../css/Search.css';
-import { Box, Typography } from '@mui/material';
+import { Box, Grid, MenuItem, Typography } from '@mui/material';
 import Navbar from '../components/Navbar';
 import MuscleGroupSelect from '../components/selects/MuscleGroupSelect';
 import LevelSelect from '../components/selects/LevelSelect';
@@ -51,6 +51,7 @@ function Search() {
   
       // Wait for the promise to resolve and get the JSON data
       const data = await response.json();
+      console.log(data);
     } catch (error) {
       // Catch any errors that occur during the fetch operation
       console.error('There has been a problem with your fetch operation:', error);
@@ -65,16 +66,24 @@ function Search() {
 
         <Box sx={{ my: 5, flexGrow: 1 }}>
           <Typography variant='h3' style={{color: 'white'}}>Redefine Your Workout.</Typography>
-          <Typography sx={{mt: 4}}variant='h5' style={{color: 'white'}}>Personalize your generated routine by filling in the options below.</Typography>
+          <Typography sx={{mt: 4}}variant='h5' style={{color: 'white'}}>Fill in the options below to view possible exercises.</Typography>
         </Box>
       
         <Box>
-          <MuscleGroupSelect setSelectedMuscles={setSelectedMuscles}/>
-          <LevelSelect setSelectedLevels={setSelectedLevels}/>
-          <EquipmentSelect setSelectedEquipment={setSelectedEquipment}/>
-          <Button onClick={getExercises}>
-          Click Me!
-        </Button>
+          <Grid container spacing={6}>
+            <Grid item xs={12} sm={6} md={4} lf={3}>
+              <MuscleGroupSelect setSelectedMuscles={setSelectedMuscles}/>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lf={3}>
+              <LevelSelect setSelectedLevels={setSelectedLevels}/>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4} lf={3}>
+            <EquipmentSelect setSelectedEquipment={setSelectedEquipment}/>
+            </Grid>
+          </Grid>
+          <Button variant='contained' onClick={getExercises}>
+            Submit
+          </Button>
         </Box>  
     </div>
   );
