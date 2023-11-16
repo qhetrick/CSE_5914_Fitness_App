@@ -65,48 +65,92 @@ core.extend(search('mountain climber'))
 core.extend(search('tuck'))
 core.extend(search('leg raise'))
 
-def generateWorkout(excludeEquipList=[], level=['Beginner', 'Intermediate', 'Advanced']):
+# push: 1 stretch, 4 push, 1 core
+def generatePushDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore):
+    rStretch = np.random.randint(0, len(fStretches))
+    rPush = np.random.choice(len(fPush), size=4, replace=False)
+    rCore = np.random.randint(0, len(fCore))
+
+    return [fStretches[rStretch], fPush[rPush[0]], fPush[rPush[1]], fPush[rPush[2]], fPush[rPush[3]], fCore[rCore]]
+
+# pull: 1 stretch, 4 pull, 1 core
+def generatePullDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore):
+    rStretch = np.random.randint(0, len(fStretches))
+    rPull = np.random.choice(len(fPull), size=4, replace=False)
+    rCore = np.random.randint(0, len(fCore))
+
+    return [fStretches[rStretch], fPull[rPull[0]], fPull[rPull[1]], fPull[rPull[2]], fPull[rPull[3]], fCore[rCore]]
+
+# leg: 1 stretch, 2 quads, 2 hamstrings, 1 core
+
+def generateLegDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore):
+    rStretch = np.random.randint(0, len(fStretches))
+    rQuads = np.random.choice(len(fQuads), size=2, replace=False)
+    rHamstrings = np.random.choice(len(fHamstrings), size=2, replace=False)
+    rCore = np.random.randint(0, len(fCore))
+
+    return [fStretches[rStretch], fQuads[rQuads[0]], fQuads[rQuads[1]], fHamstrings[rHamstrings[0]], fHamstrings[rHamstrings[1]], fCore[rCore]]
+
+
+def generateWorkout(excludeEquipList=[], level='Advanced', excludeMuscles=[], numDays=1):
+    # Set level list
+    if level == 'Advanced':
+        level = ['Beginner', 'Intermediate', 'Advanced']
+    elif level == 'Intermediate':
+        level = ['Beginner', 'Intermediate']
+    else:
+        level = ['Beginner']
+
     # Filter Data
     fStretches = []
     for hit in stretches:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if hit['_source']['equipment'] not in excludeEquipList \
+                and hit['_source']['muscle'] not in excludeMuscles and hit['_source']['level'] in level:
             fStretches.append(hit)
             
     fQuads = []
     for hit in quads:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if hit['_source']['equipment'] not in excludeEquipList \
+                and hit['_source']['muscle'] not in excludeMuscles and hit['_source']['level'] in level:
             fQuads.append(hit)
             
     fHamstrings = []
     for hit in hamstrings:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if hit['_source']['equipment'] not in excludeEquipList \
+                and hit['_source']['muscle'] not in excludeMuscles and hit['_source']['level'] in level:
             fHamstrings.append(hit)
             
     fPush = []
     for hit in push:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if hit['_source']['equipment'] not in excludeEquipList \
+                and hit['_source']['muscle'] not in excludeMuscles and hit['_source']['level'] in level:
             fPush.append(hit)
             
     fPull = []
     for hit in pull:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if hit['_source']['equipment'] not in excludeEquipList \
+                and hit['_source']['muscle'] not in excludeMuscles and hit['_source']['level'] in level:
             fPull.append(hit)
             
     fCore = []
     for hit in core:
-        if hit['_source']['equipment'] not in excludeEquipList and hit['_source']['level'] in level:
+        if hit['_source']['equipment'] not in excludeEquipList \
+                and hit['_source']['muscle'] not in excludeMuscles and hit['_source']['level'] in level:
             fCore.append(hit)
         
 
     # Select From Filtered Data
-    r1 = np.random.randint(0, len(fStretches) - 1)
-    r2 = np.random.randint(0, len(fQuads) - 1)
-    r3 = np.random.randint(0, len(fHamstrings) - 1)
-    r4 = np.random.randint(0, len(fPush) - 1)
-    r5 = np.random.randint(0, len(fPull) - 1)
-    r6 = np.random.randint(0, len(fCore) - 1)
+    workout = []
+    start = np.random.randint(3) # random start
+    for i in range(numDays):
+        if i % 3 == start % 3:
+            workout.append(generatePushDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore))
+        elif i % 3 == (start + 1) % 3:
+            workout.append(generatePullDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore))
+        else:
+            workout.append(generateLegDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore))
 
-    return [fStretches[r1], fQuads[r2], fHamstrings[r3], fPush[r4], fPull[r5], fCore[r6]]
+    return workout
 
 
 # Search in terminal for now
@@ -120,8 +164,10 @@ else:
         #if userInput != 'q':
         if first:
             first = False
-            results = generateWorkout()#search(userInput)
+            results = generateWorkout(numDays=5)#search(userInput)
             print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
-            for hit in results:
-                print("%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s" % hit[
-                    "_source"])
+            for i, hits in enumerate(results):
+                print(f"Day {i}:")
+                for hit in hits:
+                    print("%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s" % hit[
+                        "_source"])
