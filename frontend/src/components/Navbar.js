@@ -1,17 +1,28 @@
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 export default function Navbar() {
-    const theme = useTheme();
+  const theme = useTheme();
 
   return (
     <AppBar theme={theme} color="primary" position="static">
       <Toolbar>
-        <Typography sx={{ p: 1 }} variant="h5"> FitFriend </Typography>
-        <Button color="inherit" href="/">Home</Button>
-        <Button color="inherit" href="/exercises" rel="noreferrer">Exercises</Button>
-        <Button color="inherit" href="/">Generate Plan</Button>
-        <Button color="inherit" href="/about">About</Button>
+        <Typography sx={{ p: 1 }} variant="h5">
+          {" "}
+          FitFriend{" "}
+        </Typography>
+        <Button color="inherit" href="/">
+          Home
+        </Button>
+        <Button color="inherit" href="/searchforexercises" rel="noreferrer">
+          Search for Exercises
+        </Button>
+        <Button color="inherit" href="/generateworkout">
+          Generate Plan
+        </Button>
+        <Button color="inherit" href="/about">
+          About
+        </Button>
       </Toolbar>
     </AppBar>
   );

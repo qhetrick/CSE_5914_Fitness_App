@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
 import Home from "./Home.js";
-import Exercises from "./Exercises.js";
+import SearchForExercises from "./SearchForExercises.js";
 import About from "./About.js";
 import Team from "./Team.js";
 import { ThemeProvider } from "@emotion/react";
+import GenerateWorkout from "./GenerateWorkout.js";
 
 const theme = createTheme({
   palette: {
@@ -29,7 +30,11 @@ export const Pages = () => {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/exercises" element={<Exercises />}></Route>
+          <Route path="/generateworkout" element={<GenerateWorkout />}></Route>
+          <Route
+            path="/searchforexercises"
+            element={<SearchForExercises />}
+          ></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/team" element={<Team />}></Route>
         </Routes>

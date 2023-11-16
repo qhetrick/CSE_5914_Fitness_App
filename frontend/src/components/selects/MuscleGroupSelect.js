@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
+import * as React from "react";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
 
 
 const ITEM_HEIGHT = 48;
@@ -21,27 +21,27 @@ const MenuProps = {
 };
 
 const muscleGroups = [
-  'Abductors',
-  'Abs',
-  'Adductors',
-  'Biceps',
-  'Calves',
-  'Cardio',
-  'Chest',
-  'Core',
-  'Forearms',
-  'Glutes',
-  'Hamstrings',
-  'Lats Back',
-  'Lower Back',
-  'Middle Back',
-  'Neck',
-  'Plyometrics',
-  'Quadricepts',
-  'Shoulders',
-  'Stretching',
-  'Traps',
-  'Triceps'
+  "Abductors",
+  "Abs",
+  "Adductors",
+  "Biceps",
+  "Calves",
+  "Cardio",
+  "Chest",
+  "Core",
+  "Forearms",
+  "Glutes",
+  "Hamstrings",
+  "Lats Back",
+  "Lower Back",
+  "Middle Back",
+  "Neck",
+  "Plyometrics",
+  "Quadricepts",
+  "Shoulders",
+  "Stretching",
+  "Traps",
+  "Triceps",
 ];
 
 function getStyles(muscle, muscleGroup, theme) {
@@ -65,7 +65,7 @@ export default function MuscleGroupSelect(props) {
     } = event;
     setMuscleGroup(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === "string" ? value.split(",") : value
     );
 
     setSelectedMuscles(event.target.value);
@@ -74,7 +74,9 @@ export default function MuscleGroupSelect(props) {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 400 }}>
-        <InputLabel id="select-muscle-group-label" color={theme.contrastText}>{label}</InputLabel>
+        <InputLabel id="select-muscle-group-label" color={theme.contrastText}>
+          {label}
+        </InputLabel>
         <Select
           labelId="select-muscle-group-label"
           label={label}
@@ -84,9 +86,13 @@ export default function MuscleGroupSelect(props) {
           onChange={handleChange}
           input={<OutlinedInput id="select-muscle-chip" label={label} />}
           renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip style={{backgroundColor:"#f2efea"}} key={value} label={value} />
+                <Chip
+                  style={{ backgroundColor: "#f2efea" }}
+                  key={value}
+                  label={value}
+                />
               ))}
             </Box>
           )}

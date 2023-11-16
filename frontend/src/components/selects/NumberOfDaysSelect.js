@@ -19,67 +19,27 @@ const MenuProps = {
   },
 };
 
-const equipments = [
-    'Ab wheel',
-    'Balance Ball',
-    'Barbell',
-    'Barbell, Bench',
-    'Barbell, Box',
-    'Barbell, Landmine',
-    'Barbell, Resistance Band',
-    'Battle Rope',
-    'Bench',
-    'Bench, Cable',
-    'Bench, Dumbbells',
-    'Bench, Medicine Ball',
-    'Bench, Other',
-    'Bench, Resistance Band',
-    'Bench, Weight Plate',
-    'Bosu',
-    'Bosu, Cable',
-    'Box',
-    'Cable',
-    'Dumbbells',
-    'Elastic Bands, Stability Ball',
-    'Equalizer',
-    'Foam Roller',
-    'Hex Bar \\/ Trap Bar',
-    'Kettlebell',
-    'Kettlebell, Resistance Band',
-    'Landmine',
-    'Machine',
-    'Machine, Weight Plate',
-    'Medicine Ball',
-    'Pull-up Bar',
-    'Resistance Band',
-    'Smith Machine',
-    'Stability Ball',
-    'TRX',
-    'Wall',
-    'Weight Plate',
-    'None',
-    'Other'
-  ];
+const numberOfDays = ["1", "2", "3", "4", "5", "6", "7"];
 
-function getStyles(chosenEquipment, possibleEquipment, theme) {
+function getStyles(day, numberOfDays, theme) {
   return {
     fontWeight:
-      possibleEquipment.indexOf(chosenEquipment) === -1
+      numberOfDays.indexOf(day) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
 }
 
-export default function EquipmentSelect() {
+export default function NumberOfDaysSelect() {
   const theme = useTheme();
-  const label = "Equipment";
-  const [equipment, setEquipment] = React.useState([]);
+  const label = "Number of Days";
+  const [days, setDays] = React.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setEquipment(
+    setDays(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -88,17 +48,17 @@ export default function EquipmentSelect() {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 400 }}>
-        <InputLabel id="select-equipment-label" color={theme.contrastText}>
+        <InputLabel id="select-number-of-days-label" color={theme.contrastText}>
           {label}
         </InputLabel>
         <Select
-          labelId="select-equipment-label"
+          labelId="select-number-of-days-label"
           label={label}
-          id="select-equipment-chip"
-          multiple
-          value={equipment}
+          id="select-days-chip"
+          single
+          value={days}
           onChange={handleChange}
-          input={<OutlinedInput id="select-equipment-chip" label={label} />}
+          input={<OutlinedInput id="select-days-chip" label={label} />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
@@ -112,13 +72,9 @@ export default function EquipmentSelect() {
           )}
           MenuProps={MenuProps}
         >
-          {equipments.map((possibleEquipment) => (
-            <MenuItem
-              key={possibleEquipment}
-              value={possibleEquipment}
-              style={getStyles(possibleEquipment, equipment, theme)}
-            >
-              {possibleEquipment}
+          {numberOfDays.map((day) => (
+            <MenuItem key={day} value={day} style={getStyles(day, days, theme)}>
+              {day}
             </MenuItem>
           ))}
         </Select>
