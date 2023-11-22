@@ -70,10 +70,11 @@ function getStyles(chosenEquipment, possibleEquipment, theme) {
   };
 }
 
-export default function EquipmentSelect() {
+export default function EquipmentSelect(props) {
   const theme = useTheme();
   const label = "Equipment";
   const [equipment, setEquipment] = React.useState([]);
+  const setSelectedEquipment = props.setSelectedEquipment
 
   const handleChange = (event) => {
     const {
@@ -83,6 +84,7 @@ export default function EquipmentSelect() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setSelectedEquipment(event.target.value)
   };
 
   return (
