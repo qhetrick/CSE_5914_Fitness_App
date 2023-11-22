@@ -11,6 +11,7 @@ function SearchForExercises() {
   const [selectedMuscles, setSelectedMuscles] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [selectedEquipment, setSelectedEquipment] = useState([]);
+  //TODO Remove Test Search
   let testSearch = [];
   testSearch.push( {"muscle": "abs"}, {"level": "beginner"}, {"equipment": "none"} );
 

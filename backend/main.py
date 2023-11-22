@@ -3,7 +3,7 @@ import logging
 import sys
 from populateData import populateData
 import os
-
+import json
 import numpy as np
 
 # Connect to elastic search with password
@@ -305,17 +305,20 @@ if not es.ping():
 else:
     # userInput = False
     first = True
-    while True:  # userInput != 'q':
+    while first:  # userInput != 'q':
         # userInput = input('Press Enter to generate a workout (q to quit): ')#'Enter a search query (q to quit): ')
         # if userInput != 'q':
         if first:
             first = False
-            results = generateWorkout(numDays=5)  # search(userInput)
-            print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
-            for i, hits in enumerate(results):
-                print(f"Day {i}:")
-                for hit in hits:
-                    print(
-                        "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
-                        % hit["_source"]
-                    )
+            attributes = ["Ab Wheel", "Hamstrings", "Beginner", "Intermediate"]
+            categories = ["equipment", "muscle", "level", "level"]
+            search_with_attributes_and_categories(attributes, categories)
+            # results = generateWorkout(numDays=5)  # search(userInput)
+            # print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
+            # for i, hits in enumerate(results):
+            #     print(f"Day {i}:")
+            #     for hit in hits:
+            #         print(
+            #             "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+            #             % hit["_source"]
+            #         )
