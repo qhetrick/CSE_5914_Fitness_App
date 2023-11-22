@@ -3,11 +3,15 @@ Our team is committed to creating an app that saves you from guessing your worko
 
 ![Alt text](Resources/Stronk.png)
 
-# Running the project after any local changes
+# Running the project after small local changes
+1. After small changes to a specific container (frontend, backend, etc.) just run docker compose up --build -d <svc>, where <svc> is the container that you want to rebuild
+2. This drastically reduces downtime and doesnt cause your entire project to rebuild itself. 
+
+# Running the full project after pulling new changes
 1. Firstly, run "docker compose build" in the root directory
 2. Next, run "docker compose up" to start the server, or "docker compose up -d" to run the server in detached mode which allows you to run other commands after the server is started
 
-Extra:
+# Common Issues in Running:
 - When pulling changes from git, if there were any changes for dockerfiles then you will need to run "docker compose down" before repeating steps 1 and 2
 - If that doesn't fix your issue, run "git clean -fdx" and then rerun 1 and 2 *BE SURE THAT YOU STASH ANY CHANGES BEFORE DOING SO*
 - Last resort that should fix other docker related errors, run "docker compose down -v" instead, but only do this as a last resort as it clears your local docker volumes
