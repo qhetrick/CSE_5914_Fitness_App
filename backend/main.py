@@ -285,6 +285,7 @@ def search_with_attributes_and_categories(attributes, categories):
 
     # Execute the query
     results = es.search(index="exercises", body=query)
+    # print(results)
 
     # Process and print the search results as needed
     for hit in results["hits"]["hits"]:
@@ -296,7 +297,7 @@ def search_with_attributes_and_categories(attributes, categories):
     print("Done printing")
 
     # Process and return the search results
-    return results
+    return results["hits"]["hits"]
 
 
 # Search in terminal for now
