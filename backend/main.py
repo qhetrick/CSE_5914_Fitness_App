@@ -3,7 +3,7 @@ import logging
 import sys
 from populateData import populateData
 import os
-
+import json
 import numpy as np
 
 # Connect to elastic search with password
@@ -296,26 +296,29 @@ def search_with_attributes_and_categories(attributes, categories):
     print("Done printing")
 
     # Process and return the search results
-    return results
+    return results["hits"]["hits"]
 
 
-# Search in terminal for now
-if not es.ping():
-    print("ERROR: Couldn" "t connect to Elasticsearch.")
-else:
-    # userInput = False
-    first = True
-    while True:  # userInput != 'q':
-        # userInput = input('Press Enter to generate a workout (q to quit): ')#'Enter a search query (q to quit): ')
-        # if userInput != 'q':
-        if first:
-            first = False
-            results = generateWorkout(numDays=5)  # search(userInput)
-            print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
-            for i, hits in enumerate(results):
-                print(f"Day {i}:")
-                for hit in hits:
-                    print(
-                        "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
-                        % hit["_source"]
-                    )
+# # Search in terminal for now
+# if not es.ping():
+#     print("ERROR: Couldn" "t connect to Elasticsearch.")
+# else:
+#     # userInput = False
+#     first = True
+#     while first:  # userInput != 'q':
+#         # userInput = input('Press Enter to generate a workout (q to quit): ')#'Enter a search query (q to quit): ')
+#         # if userInput != 'q':
+#         if first:
+#             first = False
+#             attributes = ["Ab Wheel", "Hamstrings", "Beginner", "Intermediate"]
+#             categories = ["equipment", "muscle", "level", "level"]
+#             search_with_attributes_and_categories(attributes, categories)
+#             # results = generateWorkout(numDays=5)  # search(userInput)
+#             # print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
+#             # for i, hits in enumerate(results):
+#             #     print(f"Day {i}:")
+#             #     for hit in hits:
+#             #         print(
+#             #             "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+#             #             % hit["_source"]
+#             #         )

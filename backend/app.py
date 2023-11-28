@@ -5,6 +5,10 @@ import csv
 import pandas as pd
 import os
 from flask_cors import CORS, cross_origin;
+from main import search_with_attributes_and_categories
+
+app = Flask(__name__)
+CORS(app)
 
 # Connect to elastic search with password
 esName = os.getenv("ELASTIC_USER")
@@ -16,10 +20,6 @@ es = Elasticsearch(
     ca_certs="/usr/share/elasticsearch/config/certs/ca/ca.crt",
     verify_certs=True,
 )
-
-app = Flask(__name__)
-CORS(app)
-
 
 def feed_data_to_es(csv_file, chunk_size=500):
     for chunk in pd.read_csv(csv_file, chunksize=chunk_size):
@@ -62,9 +62,11 @@ def exercises():
 @app.route('/filter', methods=['POST'])
 def filter():
     data = request.get_json()
-    print('attributes: ', data.attributes)
-    print('categories: ', data.categories)
-    return jsonify({'results': 'data'})
+    print('attributes: ', data['attributes'])
+    print('categories: ', data['categories'])
+    data = search_with_attributes_and_categories(data['attributes'], data['categories'])
+    print(data)
+    return jsonify({'results': data})
 
 
 @app.route('/search', methods=['GET'])
