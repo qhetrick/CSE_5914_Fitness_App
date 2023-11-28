@@ -10,6 +10,10 @@ import {
 import React from "react";
 
 function VideoCard({ title, description, image, videoLink }) {
+  console.log(title)
+  console.log(description)
+  console.log(image)
+  console.log(videoLink)
   return (
     <Container>
       <Grid

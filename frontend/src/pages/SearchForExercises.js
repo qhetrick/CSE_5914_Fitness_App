@@ -6,11 +6,13 @@ import LevelSelect from '../components/selects/LevelSelect';
 import EquipmentSelect from '../components/selects/EquipmentSelect';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
+import VideoCard from '../components/VideoCard';
 
 function SearchForExercises() {
   const [selectedMuscles, setSelectedMuscles] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [selectedEquipment, setSelectedEquipment] = useState([]);
+  const [resultsData, setResultsData] = useState([]);
   //TODO Remove Test Search
   let testSearch = [];
   testSearch.push( {"muscle": "abs"}, {"level": "beginner"}, {"equipment": "none"} );
@@ -52,7 +54,10 @@ function SearchForExercises() {
   
       // Wait for the promise to resolve and get the JSON data
       const data = await response.json();
-      console.log(data);
+      console.log(data)
+      setResultsData(data.results);
+      console.log(resultsData);
+      // console.log(data.results[0]._source.name)
     } catch (error) {
       // Catch any errors that occur during the fetch operation
       console.error('There has been a problem with your fetch operation:', error);
@@ -85,7 +90,22 @@ function SearchForExercises() {
           <Button variant='contained' onClick={getExercises}>
             Submit
           </Button>
-        </Box>  
+        </Box>
+
+        <Box sx={{my: 3, mx: 3,  height: '500px', width: 'auto', overflow: "auto"}}>
+          <Grid container>
+          {resultsData.map((result) => (
+                <Grid item key={result._source.name} xs={12} sm={6} md={4}>
+                  <VideoCard
+                    title={result._source.name}
+                    description={result._source.muscle}
+                    image={result._source.previewSrc}
+                    videoLink={result._source.videoLink}
+                  />
+                </Grid>
+              ))}
+          </Grid>
+        </Box>
     </div>
   );
 }
