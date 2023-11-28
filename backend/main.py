@@ -121,7 +121,7 @@ def generateLegDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore):
         fCore[rCore],
     ]
 
-def genPlan(attributes, categories):
+def generatePlan(attributes, categories):
     _equipList = []
     _level = ""
     _excludeMuscles = []
@@ -135,7 +135,7 @@ def genPlan(attributes, categories):
         elif categories[i] == "equipment":
             _equipList.append(attributes[i])
         elif categories[i] == "day":
-            _numDays = attributes[i]
+            _numDays = int(attributes[i])
     
     return generateWorkout(equipList=_equipList, level=_level, excludeMuscles=_excludeMuscles, numDays=_numDays)
 

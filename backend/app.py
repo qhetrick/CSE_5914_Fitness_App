@@ -5,7 +5,7 @@ import csv
 import pandas as pd
 import os
 from flask_cors import CORS, cross_origin;
-from main import search_with_attributes_and_categories, genPlan
+from main import search_with_attributes_and_categories, generatePlan
 
 app = Flask(__name__)
 CORS(app)
@@ -68,12 +68,12 @@ def filter():
     print(data)
     return jsonify({'results': data})
 
-@app.route('/genWorkouts', methods=['POST'])
-def genWorkouts():
+@app.route('/genPlan', methods=['POST'])
+def genPlan():
     data = request.get_json()
     print('attributes: ', data['attributes'])
     print('categories: ', data['categories'])
-    data = genPlan(data['attributes'], data['categories'])
+    data = generatePlan(data['attributes'], data['categories'])
     print(data)
     return jsonify({'results': data})
 
