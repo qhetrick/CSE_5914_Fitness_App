@@ -121,9 +121,28 @@ def generateLegDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore):
         fCore[rCore],
     ]
 
+def genPlan(attributes, categories):
+    _equipList = []
+    _level = ""
+    _excludeMuscles = []
+    _numDays = 1
+
+    for i in range(len(categories)):
+        if categories[i] == "muscle":
+            _excludeMuscles.append(attributes[i])
+        elif categories[i] == "level":
+            _level = attributes[i]
+        elif categories[i] == "equipment":
+            _equipList.append(attributes[i])
+        elif categories[i] == "day":
+            _numDays = attributes[i]
+    
+    return generateWorkout(equipList=_equipList, level=_level, excludeMuscles=_excludeMuscles, numDays=_numDays)
+
+        
 
 def generateWorkout(
-    excludeEquipList=[], level="Advanced", excludeMuscles=[], numDays=1
+    equipList=[], level="Advanced", excludeMuscles=[], numDays=1
 ):
     # Set level list
     if level == "Advanced":
@@ -137,7 +156,7 @@ def generateWorkout(
     fStretches = []
     for hit in stretches:
         if (
-            hit["_source"]["equipment"] not in excludeEquipList
+            hit["_source"]["equipment"] in equipList
             and hit["_source"]["muscle"] not in excludeMuscles
             and hit["_source"]["level"] in level
         ):
@@ -146,7 +165,7 @@ def generateWorkout(
     fQuads = []
     for hit in quads:
         if (
-            hit["_source"]["equipment"] not in excludeEquipList
+            hit["_source"]["equipment"] in equipList
             and hit["_source"]["muscle"] not in excludeMuscles
             and hit["_source"]["level"] in level
         ):
@@ -155,7 +174,7 @@ def generateWorkout(
     fHamstrings = []
     for hit in hamstrings:
         if (
-            hit["_source"]["equipment"] not in excludeEquipList
+            hit["_source"]["equipment"] in equipList
             and hit["_source"]["muscle"] not in excludeMuscles
             and hit["_source"]["level"] in level
         ):
@@ -164,7 +183,7 @@ def generateWorkout(
     fPush = []
     for hit in push:
         if (
-            hit["_source"]["equipment"] not in excludeEquipList
+            hit["_source"]["equipment"] in equipList
             and hit["_source"]["muscle"] not in excludeMuscles
             and hit["_source"]["level"] in level
         ):
@@ -173,7 +192,7 @@ def generateWorkout(
     fPull = []
     for hit in pull:
         if (
-            hit["_source"]["equipment"] not in excludeEquipList
+            hit["_source"]["equipment"] in equipList
             and hit["_source"]["muscle"] not in excludeMuscles
             and hit["_source"]["level"] in level
         ):
@@ -182,7 +201,7 @@ def generateWorkout(
     fCore = []
     for hit in core:
         if (
-            hit["_source"]["equipment"] not in excludeEquipList
+            hit["_source"]["equipment"] in equipList
             and hit["_source"]["muscle"] not in excludeMuscles
             and hit["_source"]["level"] in level
         ):
