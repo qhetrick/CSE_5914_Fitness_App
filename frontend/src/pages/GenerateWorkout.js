@@ -43,7 +43,7 @@ function GenerateWorkout() {
 
     try {
       // Fetch the data from the Flask server
-      const response = await fetch("http://localhost:5000/filter", {
+      const response = await fetch("http://localhost:5000/genPlan", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
