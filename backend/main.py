@@ -121,6 +121,19 @@ def generateLegDay(fStretches, fQuads, fHamstrings, fPush, fPull, fCore):
         fCore[rCore],
     ]
 
+
+fullEquipmentList = ['Resistance Band', 'None', 'Cable', 'Foam Roller', 'Elastic Bands, Stability Ball', 'Machine',
+                     'Ab Wheel', 'Stability Ball', 'Barbell', 'Bosu, Cable', 'Bench', 'Dumbbells', 'Box',
+                     'Medicine Ball', 'Pull-up Bar',
+                     'Weight Plate', 'Bench, Medicine Ball', 'Other', 'Smith Machine', 'TRX', 'Bench, Weight Plate',
+                     'Bench, Dumbbells',
+                     'Bosu', 'Kettlebell', 'Equalizer', 'Barbell, Landmine', 'Kettlebell, Resistance Band',
+                     'Balance Ball',
+                     'Machine, Weight Plate', 'Barbell, Box', 'Landmine', 'Barbell, Resistance Band', 'Battle Rope',
+                     'Wall',
+                     'Barbell, Bench', 'Hex Bar \\/ Trap Bar', 'Bench, Resistance Band', 'Bench, Cable', 'Bench, Other']
+
+
 def generatePlan(attributes, categories):
     _equipList = []
     _level = ""
@@ -136,13 +149,12 @@ def generatePlan(attributes, categories):
             _equipList.append(attributes[i])
         elif categories[i] == "day":
             _numDays = int(attributes[i])
-    
+
     return generateWorkout(equipList=_equipList, level=_level, excludeMuscles=_excludeMuscles, numDays=_numDays)
 
-        
 
 def generateWorkout(
-    equipList=[], level="Advanced", excludeMuscles=[], numDays=1
+        equipList=[], level="Advanced", excludeMuscles=[], numDays=1
 ):
     # Set level list
     if level == "Advanced":
@@ -156,56 +168,70 @@ def generateWorkout(
     fStretches = []
     for hit in stretches:
         if (
-            hit["_source"]["equipment"] in equipList
-            and hit["_source"]["muscle"] not in excludeMuscles
-            and hit["_source"]["level"] in level
+                hit["_source"]["equipment"] in equipList
+                and hit["_source"]["muscle"] not in excludeMuscles
+                and hit["_source"]["level"] in level
         ):
             fStretches.append(hit)
 
     fQuads = []
     for hit in quads:
         if (
-            hit["_source"]["equipment"] in equipList
-            and hit["_source"]["muscle"] not in excludeMuscles
-            and hit["_source"]["level"] in level
+                hit["_source"]["equipment"] in equipList
+                and hit["_source"]["muscle"] not in excludeMuscles
+                and hit["_source"]["level"] in level
         ):
             fQuads.append(hit)
 
     fHamstrings = []
     for hit in hamstrings:
         if (
-            hit["_source"]["equipment"] in equipList
-            and hit["_source"]["muscle"] not in excludeMuscles
-            and hit["_source"]["level"] in level
+                hit["_source"]["equipment"] in equipList
+                and hit["_source"]["muscle"] not in excludeMuscles
+                and hit["_source"]["level"] in level
         ):
             fHamstrings.append(hit)
 
     fPush = []
     for hit in push:
         if (
-            hit["_source"]["equipment"] in equipList
-            and hit["_source"]["muscle"] not in excludeMuscles
-            and hit["_source"]["level"] in level
+                hit["_source"]["equipment"] in equipList
+                and hit["_source"]["muscle"] not in excludeMuscles
+                and hit["_source"]["level"] in level
         ):
             fPush.append(hit)
 
     fPull = []
     for hit in pull:
         if (
-            hit["_source"]["equipment"] in equipList
-            and hit["_source"]["muscle"] not in excludeMuscles
-            and hit["_source"]["level"] in level
+                hit["_source"]["equipment"] in equipList
+                and hit["_source"]["muscle"] not in excludeMuscles
+                and hit["_source"]["level"] in level
         ):
             fPull.append(hit)
 
     fCore = []
     for hit in core:
         if (
-            hit["_source"]["equipment"] in equipList
-            and hit["_source"]["muscle"] not in excludeMuscles
-            and hit["_source"]["level"] in level
+                hit["_source"]["equipment"] in equipList
+                and hit["_source"]["muscle"] not in excludeMuscles
+                and hit["_source"]["level"] in level
         ):
             fCore.append(hit)
+
+    # Check that data will work
+    if len(fStretches) < 5:
+        fStretches = stretches
+    if len(fQuads) < 5:
+        fQuads = quads
+    if len(fHamstrings) < 5:
+        fHamstrings = hamstrings
+    if len(fPush) < 5:
+        fPush = push
+    if len(fPull) < 5:
+        fPull = pull
+    if len(fCore) < 5:
+        fCore = core
 
     # Select From Filtered Data
     workout = []
@@ -316,6 +342,60 @@ def search_with_attributes_and_categories(attributes, categories):
 
     # Process and return the search results
     return results["hits"]["hits"]
+
+
+# generatePlan tests
+# testing defaults
+results = generatePlan([], [])
+print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
+for i, hits in enumerate(results):
+    print(f"Day {i}:")
+    for hit in hits:
+        print(
+            "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+            % hit["_source"]
+        )
+
+# testing empty equipment list
+print("\n\n")
+results = generatePlan(["Abs", "Intermediate", "3"], ["muscle", "level", "day"])
+print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
+for i, hits in enumerate(results):
+    print(f"Day {i}:")
+    for hit in hits:
+        print(
+            "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+            % hit["_source"]
+        )
+
+# testing excluding all muscles and using half of the equipment
+allMuscles = ['Abductors', 'Abs', 'Adductors', 'Biceps', 'Calves', 'Cardio', 'Chest', 'Core', 'Forearms', 'Glutes', 'Hamstrings', 'Lats Back', 'Lower Back', 'Middle Back', 'Miscellaneous', 'Neck', 'Plyometrics', 'Quadriceps', 'Shoulders', 'Stretching', 'Traps', 'Triceps']
+attributes = []
+categories = []
+for m in allMuscles:
+    attributes.append(m)
+    categories.append("muscle")
+for i, e in enumerate(fullEquipmentList):
+    if i % 2 == 0:
+        attributes.append(e)
+        categories.append("equipment")
+if "None" not in attributes:
+    attributes.append("None")
+    categories.append("equipment")
+attributes.append("Beginner")
+categories.append("level")
+attributes.append("5")
+categories.append("day")
+print("\n\n")
+results = generatePlan(attributes, categories)
+print("ID, Name, Equipment, Level, Muscle, Preview Source, Video Link")
+for i, hits in enumerate(results):
+    print(f"Day {i}:")
+    for hit in hits:
+        print(
+            "%(id)s, %(name)s, %(equipment)s, %(level)s, %(muscle)s, %(previewSrc)s, %(videoLink)s"
+            % hit["_source"]
+        )
 
 
 # # Search in terminal for now
