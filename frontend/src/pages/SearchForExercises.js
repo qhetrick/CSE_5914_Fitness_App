@@ -1,10 +1,9 @@
 import '../css/Search.css';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, Button } from '@mui/material';
 import Navbar from '../components/Navbar';
 import MuscleGroupSelect from '../components/selects/MuscleGroupSelect';
 import LevelSelect from '../components/selects/LevelSelect';
 import EquipmentSelect from '../components/selects/EquipmentSelect';
-import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import VideoCard from '../components/VideoCard';
 

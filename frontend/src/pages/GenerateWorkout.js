@@ -1,11 +1,12 @@
 import "../css/Search.css";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Grid, Typography, Button } from "@mui/material";
 import Navbar from "../components/Navbar";
 import MuscleGroupSelect from "../components/selects/MuscleGroupSelect";
 import NumberOfDaysSelect from "../components/selects/NumberOfDaysSelect";
 import EquipmentSelect from "../components/selects/EquipmentSelect";
 import ExperienceLevelSelect from "../components/selects/ExperienceLevelSelect";
 import React, { useState } from "react";
+import VideoCard from "../components/VideoCard";
 
 function GenerateWorkout() {
   const [selectedMuscles, setSelectedMuscles] = useState([]);
@@ -62,7 +63,7 @@ function GenerateWorkout() {
 
       // Wait for the promise to resolve and get the JSON data
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setResultsData(data.results);
       console.log(resultsData);
     } catch (error) {
@@ -127,6 +128,18 @@ function GenerateWorkout() {
         >
           Generate Workout
         </Button>
+      </Box>
+
+      <Box
+        sx={{ my: 3, mx: 3, height: "500px", width: "auto", overflow: "auto" }}
+      >
+        <Grid container>
+          {resultsData.map((result) => (
+            <Grid item key={result._source.name} xs={12} sm={6} md={4}>
+              <Typography>{result._source.name}</Typography>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
     </div>
   );
