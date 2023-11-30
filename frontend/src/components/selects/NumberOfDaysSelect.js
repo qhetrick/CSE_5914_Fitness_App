@@ -21,28 +21,24 @@ const MenuProps = {
 
 const numberOfDays = ["1", "2", "3", "4", "5", "6", "7"];
 
-function getStyles(day, numberOfDays, theme) {
+function getStyles(day, selectedDay, theme) {
   return {
     fontWeight:
-      numberOfDays.indexOf(day) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+      day === selectedDay
+        ? theme.typography.fontWeightMedium
+        : theme.typography.fontWeightRegular,
   };
 }
 
-export default function NumberOfDaysSelect() {
+export default function NumberOfDaysSelect(props) {
   const theme = useTheme();
   const label = "Number of Days";
-  const [days, setDays] = React.useState([]);
+  const [days, setDays] = React.useState('');
+  const setSelectedDays = props.setSelectedDays;
 
   const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setDays(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    setDays(event.target.value)
+    setSelectedDays(event.target.value)
   };
 
   return (
@@ -55,19 +51,16 @@ export default function NumberOfDaysSelect() {
           labelId="select-number-of-days-label"
           label={label}
           id="select-days-chip"
-          single
           value={days}
           onChange={handleChange}
           input={<OutlinedInput id="select-days-chip" label={label} />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip
-                  style={{ backgroundColor: "#f2efea" }}
-                  key={value}
-                  label={value}
-                />
-              ))}
+              <Chip
+                style={{ backgroundColor: "#f2efea" }}
+                key={selected}
+                label={selected}
+              />
             </Box>
           )}
           MenuProps={MenuProps}

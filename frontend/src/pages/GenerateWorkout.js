@@ -4,20 +4,21 @@ import Navbar from "../components/Navbar";
 import MuscleGroupSelect from "../components/selects/MuscleGroupSelect";
 import NumberOfDaysSelect from "../components/selects/NumberOfDaysSelect";
 import EquipmentSelect from "../components/selects/EquipmentSelect";
-import LevelSelect from "../components/selects/LevelSelect";
+import ExperienceLevelSelect from "../components/selects/ExperienceLevelSelect";
 import React, { useState } from "react";
 
 function GenerateWorkout() {
   const [selectedMuscles, setSelectedMuscles] = useState([]);
-  const [selectedLevels, setSelectedLevels] = useState([]);
+  const [selectedExperienceLevel, setSelectedExperienceLevel] = useState('');
   const [selectedEquipment, setSelectedEquipment] = useState([]);
-  const [selectedDays, setSelectedDays] = useState([]);
+  const [selectedDays, setSelectedDays] = useState('');
+  const [resultsData, setResultsData] = useState([]);
   let testSearch = [];
   testSearch.push(
     { muscle: "abs" },
     { level: "beginner" },
     { equipment: "none" },
-    { days: "2" }
+    { day: "2" }
   );
 
   async function getExercises() {
@@ -28,19 +29,19 @@ function GenerateWorkout() {
       attributes.push(muscle);
       categories.push("muscle");
     });
-    selectedLevels.forEach((level) => {
-      attributes.push(level);
+
+      attributes.push(selectedExperienceLevel);
       categories.push("level");
-    });
+
     selectedEquipment.forEach((equipment) => {
       attributes.push(equipment);
       categories.push("equipment");
     });
-    selectedDays.forEach((day) => {
-      attributes.push(day);
-      categories.push("day");
-    });
 
+      attributes.push(selectedDays);
+      categories.push("day");
+
+      
     try {
       // Fetch the data from the Flask server
       const response = await fetch("http://localhost:5000/genPlan", {
@@ -61,6 +62,9 @@ function GenerateWorkout() {
 
       // Wait for the promise to resolve and get the JSON data
       const data = await response.json();
+      console.log(data)
+      setResultsData(data.results);
+      console.log(resultsData);
     } catch (error) {
       // Catch any errors that occur during the fetch operation
       console.error(
@@ -93,18 +97,18 @@ function GenerateWorkout() {
         <Typography variant="body1" style={{ color: "white" }}>
           What would you consider your experience level to be?
         </Typography>
-        <LevelSelect setSelectedLevels={setSelectedLevels} />
+        <ExperienceLevelSelect setSelectedExperienceLevels={setSelectedExperienceLevel} />
         <Typography
           variant="body1"
           style={{
             color: "white",
-            alignItems: "center",
+            alignItems: "center"
           }}
           justifyContent={"left"}
         >
           What equipment do you have reasonable access to? (Please select all)
-          <EquipmentSelect setSelectedEquipment={setSelectedEquipment} />
         </Typography>
+        <EquipmentSelect setSelectedEquipment={setSelectedEquipment} />
         <Typography variant="body1" style={{ color: "white" }}>
           Are there any muscle groups that you would NOT like to be included?
           (Please select all)
