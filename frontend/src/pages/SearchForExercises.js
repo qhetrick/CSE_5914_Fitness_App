@@ -62,46 +62,50 @@ function SearchForExercises() {
 
   return (
     <div className='Search'>
-        <Box sx={{ flexGrow: 1, boxShadow: 3 }} >
-          <Navbar />
-        </Box>
+      <Box sx={{ flexGrow: 1, boxShadow: 3 }}>
+        <Navbar />
+      </Box>
 
-        <Box sx={{ my: 5, flexGrow: 1 }}>
-          <Typography variant='h3' style={{color: 'white'}}>Redefine Your Workout.</Typography>
-          <Typography sx={{mt: 4}}variant='h5' style={{color: 'white'}}>Fill in the options below to view possible exercises.</Typography>
-        </Box>
-      
-        <Box>
-          <Grid container spacing={6}>
-            <Grid item xs={12} sm={6} md={4} lf={3}>
-              <MuscleGroupSelect setSelectedMuscles={setSelectedMuscles}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} lf={3}>
-              <LevelSelect setSelectedLevels={setSelectedLevels}/>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4} lf={3}>
-            <EquipmentSelect setSelectedEquipment={setSelectedEquipment}/>
-            </Grid>
+      <Box sx={{ my: 5, flexGrow: 1, textAlign: 'center' }}>
+        <Typography variant='h3' style={{ color: '#ffffff', fontWeight: 'bold' }}>
+          Redefine Your Workout
+        </Typography>
+        <Typography sx={{ mt: 2, color: '#ffffff' }} variant='h5'>
+          Fill in the options below to view possible exercises.
+        </Typography>
+      </Box>
+
+      <Box sx={{ my: 3 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={6} md={4}>
+            <MuscleGroupSelect setSelectedMuscles={setSelectedMuscles} />
           </Grid>
-          <Button variant='contained' onClick={getExercises}>
-            Submit
-          </Button>
-        </Box>
+          <Grid item xs={12} sm={6} md={4}>
+            <LevelSelect setSelectedLevels={setSelectedLevels} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <EquipmentSelect setSelectedEquipment={setSelectedEquipment} />
+          </Grid>
+        </Grid>
+        <Button variant='contained' color='primary' onClick={getExercises}>
+          Submit
+        </Button>
+      </Box>
 
-        <Box sx={{my: 3, mx: 3,  height: '500px', width: 'auto', overflow: "auto"}}>
-          <Grid container>
+      <Box sx={{ my: 3 }}>
+        <Grid container spacing={3}>
           {resultsData.map((result) => (
-                <Grid item key={result._source.name} xs={12} sm={6} md={4}>
-                  <VideoCard
-                    title={result._source.name}
-                    description={result._source.muscle}
-                    image={result._source.previewSrc}
-                    videoLink={result._source.videoLink}
-                  />
-                </Grid>
-              ))}
-          </Grid>
-        </Box>
+            <Grid item key={result._source.name} xs={12} sm={6} md={4}>
+              <VideoCard
+                title={result._source.name}
+                description={result._source.muscle}
+                image={result._source.previewSrc}
+                videoLink={result._source.videoLink}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </div>
   );
 }
