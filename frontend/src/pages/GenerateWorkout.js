@@ -46,6 +46,7 @@ function ExerciseTable({ workoutPlan }) {
                     <TableCell sx={{ fontWeight: "bold" }}>Exercise</TableCell>
                     <TableCell sx={{ fontWeight: "bold" }}>Level</TableCell>
                     <TableCell sx={{ fontWeight: "bold" }}>Muscle</TableCell>
+                    <TableCell sx={{ fontWeight: "bold" }}>Equipment</TableCell>
                     <TableCell sx={{ fontWeight: "bold" }}>Preview</TableCell>
                     <TableCell sx={{ fontWeight: "bold" }}>
                       Repetitions & Sets
@@ -58,6 +59,7 @@ function ExerciseTable({ workoutPlan }) {
                       <TableCell>{exercise._source.name}</TableCell>
                       <TableCell>{exercise._source.level}</TableCell>
                       <TableCell>{exercise._source.muscle}</TableCell>
+                      <TableCell>{exercise._source.equipment}</TableCell>
                       <TableCell>
                         <a
                           href={exercise._source.videoLink}

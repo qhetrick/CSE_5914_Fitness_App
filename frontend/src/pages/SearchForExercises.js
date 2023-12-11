@@ -87,6 +87,8 @@ function SearchForExercises() {
             <EquipmentSelect setSelectedEquipment={setSelectedEquipment} />
           </Grid>
         </Grid>
+        <br></br>
+        <br></br>
         <Button variant='contained' color='primary' onClick={getExercises}>
           Submit
         </Button>
